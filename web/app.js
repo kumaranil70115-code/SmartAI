@@ -56,6 +56,16 @@ function stopAllAudio(){
  if(stopSpeech) stopSpeech.hidden=true;
 }
 
+let serverOnlineLabel = (!["localhost", "127.0.0.1"].includes(window.location.hostname)) ? "24/7 Cloud Server Online 🌐" : "Local server online";
+
+function getOnlineStatusLabel(data){
+ const isCloudHost = !["localhost", "127.0.0.1"].includes(window.location.hostname);
+ if(data && (data.is_cloud || data.permanent_server || isCloudHost)){
+  return "24/7 Cloud Server Online 🌐";
+ }
+ return "Local server online";
+}
+
 function setStatus(text,ok=true){
  const pill=document.querySelector("#server-status");
  if(pill){
@@ -80,7 +90,19 @@ async function refreshStatus(){
   const response=await fetch("/api/status");
   if(!response.ok)throw Error();
   const data=await response.json();
-  setStatus("Local server online");
+  serverOnlineLabel=getOnlineStatusLabel(data);
+  setStatus(serverOnlineLabel);
+
+  const serverTitleEl=document.querySelector("#server-title-text");
+  const serverNoteEl=document.querySelector("#server-location-note");
+  if(data.is_cloud || !["localhost", "127.0.0.1"].includes(window.location.hostname)){
+   if(serverTitleEl) serverTitleEl.textContent="24/7 Cloud Server";
+   if(serverNoteEl) serverNoteEl.textContent="Global High Availability · Render";
+  }else{
+   if(serverTitleEl) serverTitleEl.textContent="Local server";
+   if(serverNoteEl) serverNoteEl.textContent="Sirf is computer par";
+  }
+
   const ready=data.gemini==="ready";
   connection("#gemini-status","#gemini-mark",ready?"Connected · "+data.model:"API key zaroori hai",ready);
   connection("#search-status","#search-mark",ready?"Grounded web jawab ready":"Gemini key ke baad ready",ready);
@@ -809,7 +831,7 @@ async function sendMessage(raw){
    // camera action handled
   }
 
-  setStatus("Local server online");
+  setStatus(serverOnlineLabel);
  }catch(error){
   const errMsg=(error.message||"Connection mein dikkat aayi.")+" Settings ya network check karke koshish karein.";
   addMessage("assistant",errMsg);
@@ -1572,7 +1594,7 @@ async function sendVoiceMessage(message) {
       handleClientAction(data.client_action);
     }
 
-    setStatus("Local server online");
+    setStatus(serverOnlineLabel);
 
     // SPEAKING TURN:
     // AI speaks its reply. The callback will transition to cooldown and then listening turn.
