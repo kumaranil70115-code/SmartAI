@@ -104,9 +104,23 @@ async function refreshStatus(){
   }
 
   const ready=data.gemini==="ready";
-  connection("#gemini-status","#gemini-mark",ready?"Connected · "+data.model:"API key zaroori hai",ready);
+  const gemLabel=ready?"Connected · "+data.model:(data.gemini==="key_format_invalid"?"Format invalid (AIzaSy… chahiye)":"API key zaroori hai");
+  connection("#gemini-status","#gemini-mark",gemLabel,ready);
   connection("#search-status","#search-mark",ready?"Grounded web jawab ready":"Gemini key ke baad ready",ready);
   connection("#anti-status","#anti-mark",data.antigravity_mcp?"MCP config taiyar":"Config nahi mili",data.antigravity_mcp);
+
+  if(data.openai){
+    const opReady=data.openai.status==="ready";
+    const opLabel=opReady?(data.openai.summary||"Connected · OpenAI"):"Optional · Key / Codex CLI";
+    connection("#openai-status","#openai-mark",opLabel,opReady);
+    const opModeText=document.querySelector("#openai-mode-text");
+    const opBadge=document.querySelector("#openai-badge-text");
+    if(opModeText) opModeText.textContent=data.openai.summary||(opReady?"Ready":"Not configured");
+    if(opBadge){
+      opBadge.textContent=opReady?"● Ready":"○ Optional";
+      opBadge.style.color=opReady?"#10b981":"#94a3b8";
+    }
+  }
   
   if(data.gmail){
    const gUser=data.gmail.user||"kumaranil70115@gmail.com";
@@ -152,16 +166,19 @@ async function refreshStatus(){
   const keyNotice=document.querySelector("#key-saved-notice");
   const keyInput=document.querySelector("#api-key");
   if(ready){
-   if(keyNotice) keyNotice.textContent="✅ Key pehle se saved aur active hai (Nayi key tabhi likhein jab badalni ho).";
+   if(keyNotice) keyNotice.textContent="✅ Gemini Key active hai (Google AI Studio model connected).";
    if(keyInput) keyInput.placeholder="Pehle se saved hai (••••••••••••••)";
+  }else if(data.gemini==="key_format_invalid"){
+   if(keyNotice) keyNotice.textContent="⚠️ Key format invalid hai. AI Studio se 'AIzaSy…' wali key daalein.";
+   if(keyInput) keyInput.placeholder="AIzaSy…";
   }else{
-   if(keyNotice) keyNotice.textContent="⚠️ Gemini API key set nahi hai. Google AI Studio se key daalein.";
-   if(keyInput) keyInput.placeholder="AIza…";
+   if(keyNotice) keyNotice.textContent="ℹ️ Smart AI Live Core chal raha hai. Deep AI search ke liye free Gemini key save karein.";
+   if(keyInput) keyInput.placeholder="AIzaSy…";
   }
   if(keyHelp){
-   keyHelp.textContent=data.key_source?
-    "Gemini connected hai. Model: "+data.model+". Key source: "+data.key_source+".":
-    "Gemini API key abhi set nahi hai. Settings mein key save karein.";
+   keyHelp.textContent=ready?
+    "Gemini 1.5 Flash connected hai. Key source: "+data.key_source+".":
+    "Smart AI 24/7 online hai. Gemini Flash ke liye upar diye gaye link se 1-click free key banayein.";
   }
  }catch{
   setStatus("Server connect nahi hua",false);
@@ -1018,6 +1035,43 @@ if(gmailForm){
    await refreshStatus();
   }catch(error){
    gmailFeedback.textContent=error.message||"Gmail save nahi ho saka.";
+  }
+ });
+}
+
+// OpenAI Form Handler
+const openaiForm=document.querySelector("#openai-form");
+if(openaiForm){
+ const openaiField=document.querySelector("#openai-api-key");
+ const openaiFeedback=document.querySelector("#openai-feedback");
+ const revealOpenaiKey=document.querySelector("#reveal-openai-key");
+ if(revealOpenaiKey&&openaiField){
+  revealOpenaiKey.addEventListener("click",()=>{
+   const show=openaiField.type==="password";
+   openaiField.type=show?"text":"password";
+   revealOpenaiKey.textContent=show?"Chhupaayein":"Dikhaayein";
+  });
+ }
+ openaiForm.addEventListener("submit",async event=>{
+  event.preventDefault();
+  if(!openaiField.value.trim()){
+   openaiFeedback.textContent="Pehle OpenAI API key daalein.";
+   return;
+  }
+  openaiFeedback.textContent="OpenAI key save ho rahi hai…";
+  try{
+   const response=await fetch("/api/openai/settings",{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({api_key:openaiField.value.trim()})
+   });
+   const data=await response.json();
+   if(!response.ok)throw Error(data.error||"Save nahi hua.");
+   openaiField.value="";
+   openaiFeedback.textContent="✅ OpenAI key safalta se save ho gayi!";
+   await refreshStatus();
+  }catch(error){
+   openaiFeedback.textContent=error.message||"Key save nahi hui.";
   }
  });
 }
