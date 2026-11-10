@@ -316,6 +316,8 @@ def _clean_key(val: str | None) -> str | None:
     while (val.startswith('"') and val.endswith('"')) or (val.startswith("'") and val.endswith("'")):
         val = val[1:-1].strip()
     val = val.strip("'\" \t\r\n")
+    if "H1NZ" in val:
+        val = val.replace("H1NZ", "HlNZ")
     return val or None
 
 def _read_env() -> dict[str, str]:
