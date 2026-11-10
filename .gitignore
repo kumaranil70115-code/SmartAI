@@ -1,0 +1,8 @@
+.env
+__pycache__/
+*.py[cod]
+cloudflared.exe
+uploads/*
+!uploads/.gitkeep
+.vscode/
+*.log

@@ -1,0 +1,15 @@
+{
+	"folders": [
+		{
+			"path": "../../.codex"
+		},
+		{
+			"path": "../.."
+		}
+	],
+	"settings": {
+		"antigravity.autoOpenFiles": true,
+		"antigravity.autoRecover": true,
+		"editor.formatOnSave": true
+	}
+}

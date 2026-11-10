@@ -1,0 +1,1087 @@
+<!doctype html>
+<html lang="hi">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#08111f">
+  <title>Smart AI Assistant</title>
+  <link rel="manifest" href="/manifest.json">
+  <link rel="icon" href="/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/icon.svg">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Smart AI">
+  <link rel="stylesheet" href="/style.css">
+  <script src="/app.js" defer></script>
+</head>
+
+<body>
+  <!-- HIGH-TECH FULL BACKGROUND CYBERNETIC AI ROBOT STAGE -->
+  <div class="cyber-space-bg" id="cyber-space-bg" aria-hidden="true">
+    <div class="cyber-perspective-grid"></div>
+    <div class="cyber-glow glow-cyan"></div>
+    <div class="cyber-glow glow-violet"></div>
+    <div class="cyber-glow glow-mint"></div>
+    <div class="cyber-scanlines"></div>
+
+    <!-- FULL BACKGROUND LIFELIKE DIGITAL HUMANOID COMPANION -->
+    <div class="full-bg-robot full-bg-humanoid" id="full-bg-robot">
+      <!-- Ambient Luminous Halo Rings -->
+      <div class="human-halo-aura">
+        <span class="human-aura-ring aura-1"></span>
+        <span class="human-aura-ring aura-2"></span>
+        <span class="human-aura-ring aura-3"></span>
+      </div>
+
+      <div class="humanoid-avatar" id="bg-humanoid-avatar">
+        <!-- Human Hair / Crown Silhouette -->
+        <div class="human-hair-back"></div>
+
+        <!-- Human Head & Realistic Face Contour -->
+        <div class="human-head">
+          <div class="human-hair-crown">
+            <span class="hair-fringe fringe-left"></span>
+            <span class="hair-fringe fringe-center"></span>
+            <span class="hair-fringe fringe-right"></span>
+            <div class="human-crown-halo"></div>
+          </div>
+
+          <!-- Human Ears with Sleek Neural Jewel Accent -->
+          <div class="human-ear ear-left">
+            <span class="ear-contour"></span>
+            <span class="ear-neural-jewel"></span>
+          </div>
+          <div class="human-ear ear-right">
+            <span class="ear-contour"></span>
+            <span class="ear-neural-jewel"></span>
+          </div>
+
+          <!-- Forehead & Subtle Third-Eye Neural Gem -->
+          <div class="human-forehead">
+            <div class="human-neural-gem" title="Smart AI Neural Mind">✦</div>
+          </div>
+
+          <!-- Natural Expressive Human Eyebrows -->
+          <div class="human-eyebrows">
+            <div class="human-eyebrow brow-left"></div>
+            <div class="human-eyebrow brow-right"></div>
+          </div>
+
+          <!-- Lifelike Expressive Human Eyes -->
+          <div class="human-eyes">
+            <!-- Left Eye -->
+            <div class="human-eye eye-left">
+              <div class="human-eyelid eyelid-upper"></div>
+              <div class="human-sclera">
+                <div class="human-iris">
+                  <div class="human-pupil"></div>
+                  <div class="iris-ring"></div>
+                  <div class="human-glint glint-1"></div>
+                  <div class="human-glint glint-2"></div>
+                </div>
+              </div>
+              <div class="human-eyelid eyelid-lower"></div>
+            </div>
+
+            <!-- Right Eye -->
+            <div class="human-eye eye-right">
+              <div class="human-eyelid eyelid-upper"></div>
+              <div class="human-sclera">
+                <div class="human-iris">
+                  <div class="human-pupil"></div>
+                  <div class="iris-ring"></div>
+                  <div class="human-glint glint-1"></div>
+                  <div class="human-glint glint-2"></div>
+                </div>
+              </div>
+              <div class="human-eyelid eyelid-lower"></div>
+            </div>
+          </div>
+
+          <!-- Soft Warm Cheeks with Natural Blush -->
+          <div class="human-cheeks">
+            <span class="cheek-blush blush-left"></span>
+            <span class="cheek-blush blush-right"></span>
+          </div>
+
+          <!-- Sculpted Natural Human Nose -->
+          <div class="human-nose">
+            <div class="nose-bridge"></div>
+            <div class="nose-tip"></div>
+            <div class="nostrils">
+              <span class="nostril nostril-left"></span>
+              <span class="nostril nostril-right"></span>
+            </div>
+          </div>
+
+          <!-- Lifelike Human Mouth & Lips (Animated Speaking & Smiling) -->
+          <div class="human-mouth-container" id="bg-human-mouth">
+            <div class="human-lips">
+              <div class="human-lip-upper"></div>
+              <div class="human-mouth-cavity">
+                <div class="human-teeth"></div>
+                <div class="human-tongue"></div>
+              </div>
+              <div class="human-lip-lower">
+                <span class="lip-sheen"></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Chin & Graceful Jawline Contour -->
+          <div class="human-chin">
+            <div class="chin-cleft"></div>
+          </div>
+        </div>
+
+        <!-- Human Neck & Collar / Shoulders -->
+        <div class="human-neck">
+          <div class="neck-contour"></div>
+          <div class="neck-accent"></div>
+        </div>
+        <div class="human-shoulders">
+          <div class="shoulder-collar collar-left"></div>
+          <div class="collar-crest">
+            <span class="crest-gem">✦</span>
+          </div>
+          <div class="shoulder-collar collar-right"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#/"><span class="brand-mark">S</span><span><strong>SMART AI</strong><small>आपका local
+            assistant <span class="version-badge" id="brand-version-badge">v2.0.0</span></small></span></a>
+      <div class="top-actions">
+        <div class="status-pill" id="server-status"><i class="dot"></i><span>Server dekh raha hoon…</span></div>
+        <button class="icon-button" id="live-voice-open" type="button"
+          title="Hands-Free Live Voice Conversation">🎙️</button>
+        <button class="icon-button" id="agents-open" type="button" title="Free OpenSource AI Agents (GitHub Linked)">🤖</button>
+        <button class="icon-button" id="learning-open" type="button" title="Smart AI Self-Learning & Feedback Stars">🌟</button>
+        <button class="icon-button" id="version-open" type="button" title="Smart AI Versions & Updates">🏷️</button>
+        <button class="icon-button" id="weather-open" type="button" title="World Weather & Forecast">🌤️</button>
+        <button class="icon-button" id="phone-open" type="button" title="Phone Setup & Mobile App">📱</button>
+        <button class="icon-button" id="perms-open" type="button" title="Desktop & Phone Permissions">🛡️</button>
+        <button class="icon-button" id="tools-open" type="button" title="Connected Google Tools">🧰</button>
+        <button class="icon-button" id="settings-open" type="button" aria-label="Settings">⚙</button>
+      </div>
+    </header>
+    <div class="layout">
+      <aside class="sidebar">
+        <section class="connection-card">
+          <div class="section-heading"><span class="eyebrow">CONNECTIONS</span><i class="live-dot"></i></div>
+          <div class="connection-row" id="phone-row" style="cursor:pointer" title="Click to open on Phone"><b
+              class="connection-icon phone-icon">📱</b>
+            <div><strong>Phone Access</strong><small id="phone-status">Phone Access</small></div><i
+              class="connection-mark good">●</i>
+          </div>
+          <div class="connection-row" id="voice-row" style="cursor:pointer" title="Continuous Live Voice Mode"><b
+              class="connection-icon voice-icon">🎙️</b>
+            <div><strong>Live Voice Assistant</strong><small id="voice-mode-status">Hands-Free · Auto Reply</small>
+            </div><i class="connection-mark good" id="voice-mode-mark">●</i>
+          </div>
+          <div class="connection-row"><b class="connection-icon">G</b>
+            <div><strong>Gemini AI</strong><small id="gemini-status">Check ho raha hai</small></div><i
+              class="connection-mark" id="gemini-mark">…</i>
+          </div>
+          <div class="connection-row" id="openai-row" style="cursor:pointer"
+            title="Click to view OpenAI / Codex settings"><b class="connection-icon openai-icon">⚡</b>
+            <div><strong>OpenAI (Codex)</strong><small id="openai-status">Check ho raha hai</small></div><i
+              class="connection-mark" id="openai-mark">…</i>
+          </div>
+          <div class="connection-row"><b class="connection-icon search-icon">⌕</b>
+            <div><strong>Google Search</strong><small id="search-status">Grounded web jawab</small></div><i
+              class="connection-mark good" id="search-mark">●</i>
+          </div>
+          <div class="connection-row"><b class="connection-icon mail-icon">✉</b>
+            <div><strong>Gmail</strong><small id="gmail-status">kumaranil70115@gmail.com</small></div><i
+              class="connection-mark" id="gmail-mark">…</i>
+          </div>
+          <div class="connection-row" id="weather-row" style="cursor:pointer" title="Click to view World Weather"><b
+              class="connection-icon weather-icon">🌤️</b>
+            <div><strong>World Weather</strong><small id="weather-status">Live Google Mausam</small></div><i
+              class="connection-mark good">●</i>
+          </div>
+          <div class="connection-row" id="tools-row" style="cursor:pointer" title="Click to view all 8 Google Tools"><b
+              class="connection-icon tools-icon">🧰</b>
+            <div><strong>Google Tools</strong><small id="tools-status">8 Tools Connected</small></div><i
+              class="connection-mark good">●</i>
+          </div>
+          <div class="connection-row" id="perms-row" style="cursor:pointer"
+            title="Click to manage Desktop & Phone Permissions"><b class="connection-icon perms-icon">🛡️</b>
+            <div><strong>Permissions</strong><small id="perms-status">0/10 Allowed</small></div><i
+              class="connection-mark safe" id="perms-mark">🔒</i>
+          </div>
+          <div class="connection-row" id="learning-row" style="cursor:pointer" title="Continuous Self-Learning & Ratings"><b
+              class="connection-icon learning-icon">🌟</b>
+            <div><strong>AI Self-Learning</strong><small id="learning-status">⭐ 5.0 · Auto-Improve</small></div><i
+              class="connection-mark good">●</i>
+          </div>
+          <div class="connection-row" id="agents-row" style="cursor:pointer" title="OpenSource & Google AI Agents (GitHub Linked)"><b
+              class="connection-icon agents-icon">🤖</b>
+            <div><strong>OpenSource & Google Agents</strong><small id="agents-sidebar-status">26 Free Agents</small></div><i
+              class="connection-mark good">●</i>
+          </div>
+          <div class="connection-row" id="version-row" style="cursor:pointer"
+            title="Click to view & create Smart AI Versions"><b class="connection-icon version-icon">🏷️</b>
+            <div><strong>Smart AI Version</strong><small id="sidebar-version">v2.0.0 · Active</small></div><i
+              class="connection-mark good">●</i>
+          </div>
+          <div class="connection-row" id="cmd-row" style="cursor:pointer"
+            title="Click to open CMD & Python Coding Terminal"><b class="connection-icon cmd-icon">&gt;_</b>
+            <div><strong>CMD Terminal</strong><small id="cmd-status">Python 3.12 · CODING AI</small></div><i
+              class="connection-mark good" id="cmd-mark">●</i>
+          </div>
+          <div class="connection-row"><b class="connection-icon python-icon">Py</b>
+            <div><strong>Python</strong><small>Safe local calculator</small></div><i class="connection-mark good">●</i>
+          </div>
+          <div class="connection-row"><b class="connection-icon server-icon">⌘</b>
+            <div><strong>Local server</strong><small>Sirf is computer par</small></div><i
+              class="connection-mark good">●</i>
+          </div>
+          <div class="connection-row"><b class="connection-icon anti-icon">A</b>
+            <div><strong>Antigravity</strong><small id="anti-status">MCP config dekh raha hoon</small></div><i
+              class="connection-mark" id="anti-mark">…</i>
+          </div>
+        </section>
+        <section class="quick-card"><span class="eyebrow">TRY A COMMAND</span>
+          <button class="quick-command" data-prompt="/agents">🤖 <span>Free OpenSource Agents Hub</span><i>↗</i></button>
+          <button class="quick-command" data-prompt="Delhi ka live mausam aur forecast batao">🌤️ <span>Delhi Live
+              Weather</span><i>↗</i></button>
+          <button class="quick-command" data-prompt="London, Tokyo aur New York me abhi kitna temperature hai?">🌍
+            <span>World Weather report</span><i>↗</i></button>
+          <button class="quick-command" data-prompt="/antigravity Namaste! Antigravity AI ka introduction dein">🌌
+            <span>Antigravity AI se poochhein</span><i>↗</i></button>
+          <button class="quick-command" data-prompt="/codex Namaste! OpenAI Codex ka parichay dein">🧠 <span>OpenAI
+              Codex se poochhein</span><i>↗</i></button>
+          <button class="quick-command" data-prompt="/version">🏷️ <span>Version & Updates</span><i>↗</i></button>
+          <button class="quick-command" data-prompt="/permissions">🛡️ <span>Desktop Permissions</span><i>↗</i></button>
+          <button class="quick-command" data-prompt="WhatsApp kholo">💬 <span>WhatsApp open karo</span><i>↗</i></button>
+          <button class="quick-command" data-prompt="Computer ke Files aur Folder kholo">📁 <span>Files / Folder
+              kholo</span><i>↗</i></button>
+          <button class="quick-command" data-prompt="Games kholo">🎮 <span>Games open karo</span><i>↗</i></button>
+          <button class="quick-command" data-prompt="/tools">🧰 <span>Connected Google Tools</span><i>↗</i></button>
+          <button class="quick-command" data-prompt="Mera Gmail inbox check karo, koi naya mail aaya hai kya?">✉
+            <span>Gmail unread check karo</span><i>↗</i></button>
+          <button class="quick-command" data-prompt="Aaj ki latest AI news Google se dhoondo">🌐 <span>Latest news
+              dhoondo</span><i>↗</i></button>
+          <button class="quick-command" data-prompt="/python # Python AI Script
+import sys, math
+print('Smart AI Engine Active')
+print(f'Python: {sys.version.split()[0]}')
+print(f'Pi calculation: {math.pi}')">🐍 <span>Python AI Code chalaayein</span><i>↗</i></button>
+          <button class="quick-command" data-prompt="/cmd dir">💻 <span>CMD Shell Command run</span><i>↗</i></button>
+          <button class="quick-command" data-prompt="/calc 12 * (5 + 2)">∑ <span>Python se hisaab
+              karo</span><i>↗</i></button>
+        </section>
+        <div class="privacy-note">🔒 <p>Local server aapke computer par chalta hai. Bina permission ke WhatsApp, Files
+            ya Apps open nahi hote.</p>
+        </div>
+        <div class="sidebar-footer" id="sidebar-footer"><i class="online-dot"></i> <span id="footer-engine-text">TRIPLE
+            ENGINE · GEMINI + CODEX + ANTIGRAVITY</span></div>
+      </aside>
+      <main class="chat-panel">
+        <div class="chat-robot-backdrop" aria-hidden="true">
+          <div class="cyber-radar-ring ring-1"></div>
+          <div class="cyber-radar-ring ring-2"></div>
+          <div class="cyber-radar-ring ring-3"></div>
+          <div class="cyber-robot-wireframe"></div>
+        </div>
+        <div class="chat-toolbar">
+          <div><strong>Nayi baat-cheet</strong><small>Likhein, ya mic se boliye</small></div><button
+            class="clear-button" id="clear-chat">Nayi chat ↻</button>
+        </div>
+        <section class="messages" id="messages" role="log" aria-live="polite">
+          <article class="message assistant welcome-message ai-hero-card">
+            <div class="avatar ai-avatar-glow" title="Smart AI Digital Companion">
+              <svg viewBox="0 0 36 36" width="28" height="28" class="avatar-humanoid-svg">
+                <circle cx="18" cy="18" r="17" fill="url(#heroAvatarGrad)" stroke="rgba(56, 189, 248, 0.6)" stroke-width="1.5"/>
+                <defs>
+                  <linearGradient id="heroAvatarGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#1e293b"/>
+                    <stop offset="100%" stop-color="#0f172a"/>
+                  </linearGradient>
+                </defs>
+                <!-- Hair halo -->
+                <path d="M10 16c0-6 3.5-10 8-10s8 4 8 10c0 1-.4 2-.8 3-1.2-3-4-4.5-7.2-4.5s-6 1.5-7.2 4.5c-.5-1-.8-2-.8-3z" fill="#38bdf8" opacity="0.8"/>
+                <!-- Face -->
+                <ellipse cx="18" cy="17" rx="6.5" ry="7.5" fill="#fce7f3" opacity="0.95"/>
+                <!-- Eyes -->
+                <ellipse cx="15.5" cy="16" rx="1.2" ry="1" fill="#0284c7"/>
+                <ellipse cx="20.5" cy="16" rx="1.2" ry="1" fill="#0284c7"/>
+                <circle cx="15.8" cy="15.7" r="0.4" fill="#ffffff"/>
+                <circle cx="20.8" cy="15.7" r="0.4" fill="#ffffff"/>
+                <!-- Cheeks -->
+                <circle cx="14" cy="18.5" r="1.2" fill="#f43f5e" opacity="0.45"/>
+                <circle cx="22" cy="18.5" r="1.2" fill="#f43f5e" opacity="0.45"/>
+                <!-- Gentle smiling mouth -->
+                <path d="M16 20.2 Q18 22 20 20.2" fill="none" stroke="#e11d48" stroke-width="1.2" stroke-linecap="round"/>
+                <!-- Shoulders -->
+                <path d="M12 28 c1.5-3 3.5-4 6-4s4.5 1 6 4" fill="none" stroke="#38bdf8" stroke-width="2"/>
+              </svg>
+            </div>
+            <div class="message-content">
+              <div class="ai-hero-container">
+                <h1 class="ai-hero-title">Namaste! Main aapka Smart AI Companion hoon.</h1>
+                <p class="ai-hero-sub">Ek sachhe insaan ki tarah samajhne, baat karne aur madad karne wala aapka apna dost. Likhiye ya Live Voice me aamne-saamne boliye.</p>
+
+                <!-- HANDS-FREE LIVE VOICE CONVERSATION WIDGET -->
+                <div class="live-voice-widget" id="live-voice-widget">
+                  <div class="voice-widget-header">
+                    <div class="voice-status-indicator">
+                      <span class="voice-pulse-dot" id="voice-pulse-dot"></span>
+                      <span class="voice-title" id="voice-header-title">HANDS-FREE LIVE VOICE ASSISTANT</span>
+                    </div>
+                    <div class="voice-actions-top">
+                      <span class="voice-hud-tag" id="voice-hud-tag">READY</span>
+                      <button type="button" class="voice-mini-btn" id="voice-stop-btn"
+                        title="Voice conversation pause karein" hidden>⏹ Rokein</button>
+                    </div>
+                  </div>
+
+                  <div class="voice-viewport" id="voice-viewport">
+                    <div class="voice-visualizer-container">
+                      <!-- LIFELIKE DIGITAL HUMANOID COMPANION LIVE STAGE -->
+                      <div class="voice-orb humanoid-stage" id="voice-orb" title="Click to start/pause Live Voice">
+                        <!-- Holographic Sonic Halo Rings -->
+                        <div class="human-halo-aura">
+                          <span class="human-aura-ring aura-1"></span>
+                          <span class="human-aura-ring aura-2"></span>
+                          <span class="human-aura-ring aura-3"></span>
+                        </div>
+
+                        <div class="humanoid-avatar stage-avatar">
+                          <!-- Hair crown -->
+                          <div class="human-hair-back"></div>
+                          <div class="human-head">
+                            <div class="human-hair-crown">
+                              <span class="hair-fringe fringe-left"></span>
+                              <span class="hair-fringe fringe-center"></span>
+                              <span class="hair-fringe fringe-right"></span>
+                              <div class="human-crown-halo"></div>
+                            </div>
+                            <div class="human-ear ear-left"><span class="ear-contour"></span><span class="ear-neural-jewel"></span></div>
+                            <div class="human-ear ear-right"><span class="ear-contour"></span><span class="ear-neural-jewel"></span></div>
+                            <div class="human-forehead"><div class="human-neural-gem">✦</div></div>
+                            <div class="human-eyebrows">
+                              <div class="human-eyebrow brow-left"></div>
+                              <div class="human-eyebrow brow-right"></div>
+                            </div>
+                            <div class="human-eyes">
+                              <div class="human-eye eye-left">
+                                <div class="human-eyelid eyelid-upper"></div>
+                                <div class="human-sclera">
+                                  <div class="human-iris">
+                                    <div class="human-pupil"></div>
+                                    <div class="iris-ring"></div>
+                                    <div class="human-glint glint-1"></div>
+                                    <div class="human-glint glint-2"></div>
+                                  </div>
+                                </div>
+                                <div class="human-eyelid eyelid-lower"></div>
+                              </div>
+                              <div class="human-eye eye-right">
+                                <div class="human-eyelid eyelid-upper"></div>
+                                <div class="human-sclera">
+                                  <div class="human-iris">
+                                    <div class="human-pupil"></div>
+                                    <div class="iris-ring"></div>
+                                    <div class="human-glint glint-1"></div>
+                                    <div class="human-glint glint-2"></div>
+                                  </div>
+                                </div>
+                                <div class="human-eyelid eyelid-lower"></div>
+                              </div>
+                            </div>
+                            <div class="human-cheeks"><span class="cheek-blush blush-left"></span><span class="cheek-blush blush-right"></span></div>
+                            <div class="human-nose">
+                              <div class="nose-bridge"></div>
+                              <div class="nose-tip"></div>
+                            </div>
+                            <div class="human-mouth-container">
+                              <div class="human-lips">
+                                <div class="human-lip-upper"></div>
+                                <div class="human-mouth-cavity"><div class="human-teeth"></div><div class="human-tongue"></div></div>
+                                <div class="human-lip-lower"><span class="lip-sheen"></span></div>
+                              </div>
+                            </div>
+                            <div class="human-chin"><div class="chin-cleft"></div></div>
+                          </div>
+                          <div class="human-neck"><div class="neck-contour"></div></div>
+                          <div class="human-shoulders"><div class="shoulder-collar collar-left"></div><div class="collar-crest"><span class="crest-gem">✦</span></div><div class="shoulder-collar collar-right"></div></div>
+                        </div>
+
+                        <!-- Fallback / Accessible icon element -->
+                        <span class="voice-orb-icon" id="voice-orb-icon" style="display:none">🎙️</span>
+                      </div>
+
+                      <!-- Dynamic Equalizer Wave Bars -->
+                      <div class="voice-audio-bars" id="voice-audio-bars">
+                        <span class="vbar bar-1"></span>
+                        <span class="vbar bar-2"></span>
+                        <span class="vbar bar-3"></span>
+                        <span class="vbar bar-4"></span>
+                        <span class="vbar bar-5"></span>
+                        <span class="vbar bar-6"></span>
+                        <span class="vbar bar-7"></span>
+                        <span class="vbar bar-8"></span>
+                      </div>
+
+                      <!-- Status & Guidance -->
+                      <div class="voice-status-main" id="voice-status-main">
+                        <h3 class="voice-state-text" id="voice-state-text">Tap karke Live Voice shuru karein</h3>
+                        <p class="voice-state-sub" id="voice-state-sub">Aap bolenge to AI sunega, chup hone par turant
+                          bolkar jawab dega.</p>
+                      </div>
+
+                      <!-- Live Transcribed Speech Preview Box -->
+                      <div class="voice-live-transcript" id="voice-live-transcript" hidden>
+                        <span class="transcript-prefix">🗣️ Aap bol rahe hain:</span>
+                        <span class="transcript-text" id="transcript-live-text">...</span>
+                      </div>
+                    </div>
+
+                    <!-- 1-Click Main Start Button -->
+                    <button type="button" class="voice-main-btn" id="voice-main-btn">
+                      <span class="btn-icon">🎙️</span>
+                      <span class="btn-text" id="voice-btn-text">Live Voice Baat-Cheet Chalu Karein</span>
+                    </button>
+                  </div>
+
+                  <!-- Live Voice Feature Bar -->
+                  <div class="voice-footer-bar">
+                    <div class="voice-feature-pill">
+                      <span>⚡ <strong>Auto-Detect:</strong> Chup hote hi instant jawab</span>
+                    </div>
+                    <div class="voice-feature-pill">
+                      <span>🔁 <strong>Continuous:</strong> Jawab ke baad dobara automatic sunega</span>
+                    </div>
+                    <div class="voice-feature-pill">
+                      <span>🛑 <strong>Barge-In:</strong> Beech me bolne par AI turant ruk jayega</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+        </section>
+        <div class="typing-row" id="typing-row" hidden><span class="typing-dots"><i></i><i></i><i></i></span> Soch raha
+          hoon…</div>
+        <div class="composer-area">
+          <div class="composer-options">
+            <div class="engine-selector">
+              <span class="engine-label">AI:</span>
+              <select id="engine-select" class="engine-select" title="AI Engine badlein">
+                <option value="auto">🔄 Auto (Multi Engine)</option>
+                <option value="antigravity">🌌 Antigravity AI</option>
+                <option value="openai">⚡ OpenAI Codex</option>
+                <option value="gemini">✨ Gemini 3.8</option>
+              </select>
+            </div>
+            <div class="engine-selector agent-selector" title="GitHub OpenSource AI Agent ki help lein">
+              <span class="engine-label">Agent:</span>
+              <select id="agent-help-select" class="engine-select">
+                <option value="auto" selected>🧠 Auto Agent Dispatcher (Autonomous)</option>
+                <option value="none">🚫 Direct AI Only (No Agent)</option>
+                <option value="google-genkit">⚡ Google Genkit (Production Workflows)</option>
+                <option value="google-astra">🌌 Google Project Astra (Multimodal AI)</option>
+                <option value="crewai">👥 CrewAI (Multi-Agent Swarm)</option>
+                <option value="autogen">💬 Microsoft AutoGen (Conversational Agents)</option>
+                <option value="openhands">🙌 OpenHands (Autonomous Software Engineer)</option>
+                <option value="autogpt">🤖 AutoGPT (Deep Research)</option>
+                <option value="aider">👨‍💻 Aider (Git Pair Programmer)</option>
+                <option value="open-interpreter">💻 Open Interpreter (Code/Terminal)</option>
+                <option value="metagpt">🏢 MetaGPT (Software Team)</option>
+                <option value="swe-agent">🔧 SWE-agent (Bug Fixer)</option>
+                <option value="gpt-engineer">🏗️ GPT-Engineer (Full Codebase)</option>
+                <option value="memgpt">🧠 MemGPT (Perpetual Memory)</option>
+                <option value="ollama">🦙 Ollama (Local Offline AI)</option>
+              </select>
+            </div>
+            <label class="toggle-option"><input id="search-toggle" type="checkbox"><i class="toggle"></i> Google
+              Search</label>
+            <label class="toggle-option"><input id="speech-toggle" type="checkbox" checked><i class="toggle"></i> Bolkar
+              jawab</label>
+            <button class="stop-speech-button" id="stop-speech" type="button" title="Bolna band karein" hidden>⏹ Bolna
+              rokein</button>
+            <span class="composer-hint" id="voice-hint">Mic ke liye Chrome/Edge use karein</span>
+          </div>
+          <div class="attachment-tray" id="attachment-tray" hidden></div>
+          <form class="composer" id="chat-form">
+            <div class="attach-wrapper">
+              <button class="attach-button" id="attach-btn" type="button"
+                title="Attach file, photo, video, folder">+</button>
+              <div class="attach-menu" id="attach-menu" hidden>
+                <div class="attach-menu-header">
+                  <span class="eyebrow">UPLOAD & ATTACH</span>
+                  <button type="button" class="attach-close-btn" id="attach-close-btn"
+                    aria-label="Close menu">✕</button>
+                </div>
+                <div class="attach-grid">
+                  <button type="button" class="attach-item" data-type="camera">
+                    <span class="attach-icon bg-camera">📷</span>
+                    <strong>Camera</strong>
+                    <small>Photo capture</small>
+                  </button>
+                  <button type="button" class="attach-item" data-type="photo">
+                    <span class="attach-icon bg-photo">🖼️</span>
+                    <strong>Photo</strong>
+                    <small>Gallery images</small>
+                  </button>
+                  <button type="button" class="attach-item" data-type="video">
+                    <span class="attach-icon bg-video">🎥</span>
+                    <strong>Video</strong>
+                    <small>MP4, clips</small>
+                  </button>
+                  <button type="button" class="attach-item" data-type="docs">
+                    <span class="attach-icon bg-docs">📄</span>
+                    <strong>Docs</strong>
+                    <small>PDF, Word, TXT</small>
+                  </button>
+                  <button type="button" class="attach-item" data-type="audio">
+                    <span class="attach-icon bg-audio">🎵</span>
+                    <strong>Music</strong>
+                    <small>Audio, songs</small>
+                  </button>
+                  <button type="button" class="attach-item" data-type="apks">
+                    <span class="attach-icon bg-apks">📦</span>
+                    <strong>APKs</strong>
+                    <small>Android apps</small>
+                  </button>
+                  <button type="button" class="attach-item" data-type="zip">
+                    <span class="attach-icon bg-zip">🗜️</span>
+                    <strong>ZIP</strong>
+                    <small>ZIP, RAR, 7z</small>
+                  </button>
+                  <button type="button" class="attach-item" data-type="screenshot">
+                    <span class="attach-icon bg-screenshot">📸</span>
+                    <strong>Screenshot</strong>
+                    <small>Screen captures</small>
+                  </button>
+                  <button type="button" class="attach-item" data-type="folder">
+                    <span class="attach-icon bg-folder">📁</span>
+                    <strong>Folder</strong>
+                    <small>Poora folder</small>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <button class="mic-button" id="mic-button" type="button" title="Hindi mein boliye">◉</button>
+            <textarea id="message-input" rows="1" maxlength="25000"
+              placeholder="Apna sawaal likhiye ya files attach karein…"></textarea>
+            <button class="send-button" id="send-button" type="submit"><span>Bhejein</span><b>↑</b></button>
+          </form>
+
+          <div class="hidden-file-inputs" hidden aria-hidden="true" style="display:none !important;position:fixed !important;left:-9999px !important;top:-9999px !important;width:0 !important;height:0 !important;opacity:0 !important;pointer-events:none !important;visibility:hidden !important">
+            <input type="file" id="input-camera" accept="image/*" capture="environment" class="hidden-file-input" style="display:none !important" tabindex="-1">
+            <input type="file" id="input-photo" accept="image/*" multiple class="hidden-file-input" style="display:none !important" tabindex="-1">
+            <input type="file" id="input-video" accept="video/*" multiple class="hidden-file-input" style="display:none !important" tabindex="-1">
+            <input type="file" id="input-docs"
+              accept=".pdf,.doc,.docx,.txt,.csv,.xlsx,.xls,.pptx,.ppt,.odt,.rtf,.json,.md,.py,.js,.html,.css" multiple class="hidden-file-input" style="display:none !important" tabindex="-1">
+            <input type="file" id="input-audio" accept="audio/*" multiple class="hidden-file-input" style="display:none !important" tabindex="-1">
+            <input type="file" id="input-apks" accept=".apk,.xapk" multiple class="hidden-file-input" style="display:none !important" tabindex="-1">
+            <input type="file" id="input-zip" accept=".zip,.rar,.7z,.tar,.gz,.bz2" multiple class="hidden-file-input" style="display:none !important" tabindex="-1">
+            <input type="file" id="input-screenshot" accept="image/*" multiple class="hidden-file-input" style="display:none !important" tabindex="-1">
+            <input type="file" id="input-folder" webkitdirectory directory multiple class="hidden-file-input" style="display:none !important" tabindex="-1">
+          </div>
+          <div class="composer-footnote">Security: WhatsApp, Folders aur Apps bina explicit permission ke block rahenge.
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- SETTINGS MODAL -->
+  <dialog id="settings-modal" class="settings-modal">
+    <div class="modal-close-row"><button class="icon-button modal-close-btn" type="button" aria-label="Band karein">×</button></div>
+    <div class="modal-icon">G</div><span class="eyebrow">GOOGLE GEMINI</span>
+    <h2>API connection</h2>
+    <p class="modal-copy" id="key-help">Local key status check ho raha hai…</p>
+    <form id="settings-form"><label for="api-key">Gemini API key</label>
+      <div class="key-field"><input id="api-key" type="password" autocomplete="off"
+          placeholder="Pehle se saved hai (••••••••••••••)" maxlength="512"><button class="reveal-key" id="reveal-key"
+          type="button">Dikhaayein</button></div>
+      <small id="key-saved-notice">✅ Key pehle se saved aur active hai.</small>
+      <div class="modal-actions"><button type="button" class="secondary-button" id="settings-cancel">Radd
+          karein</button><button class="send-button" type="submit"><span>Nayi key save karein</span><b>✓</b></button>
+      </div>
+      <div class="settings-feedback" id="settings-feedback" role="status"></div>
+    </form>
+    <hr class="modal-divider">
+    <div class="modal-icon mail-icon">✉</div><span class="eyebrow">GMAIL CONNECTION</span>
+    <h2>kumaranil70115@gmail.com</h2>
+    <p class="modal-copy" id="gmail-help">Gmail se unread mails check karne ke liye 16-akshar ka Google App Password
+      daalein.</p>
+    <form id="gmail-form">
+      <label for="gmail-email">Gmail Address</label>
+      <div class="key-field"><input id="gmail-email" type="email" value="kumaranil70115@gmail.com" required></div>
+      <label for="gmail-pwd" style="margin-top:12px">Google App Password</label>
+      <div class="key-field"><input id="gmail-pwd" type="password" autocomplete="off" placeholder="xxxx xxxx xxxx xxxx"
+          maxlength="64"><button class="reveal-key" id="reveal-gmail-pwd" type="button">Dikhaayein</button></div>
+      <small class="gmail-instructions">
+        ℹ️ Google Security regular password allow nahi karti.<br>
+        1. <a href="https://myaccount.google.com/apppasswords" target="_blank" rel="noopener">Google App Passwords</a>
+        kholiye.<br>
+        2. "Smart AI" likhkar 16-akshar ka App Password banayein.<br>
+        3. Mila hua password yahan daalkar Save karein.
+      </small>
+      <div class="modal-actions"><button class="send-button" type="submit"><span>Gmail Connect
+            karein</span><b>✓</b></button></div>
+      <div class="settings-feedback" id="gmail-feedback" role="status"></div>
+    </form>
+    <hr class="modal-divider">
+    <div class="modal-icon openai-icon">⚡</div><span class="eyebrow">OPENAI / CODEX</span>
+    <h2>OpenAI Codex Connection</h2>
+    <div class="tools-account-banner openai-banner" id="openai-status-banner">
+      <span>⚡ Engine: <strong id="openai-mode-text">Codex CLI Active</strong></span>
+      <span id="openai-badge-text">● Ready</span>
+    </div>
+    <p class="modal-copy" id="openai-help">Codex CLI aapke computer par direct connected hai. Chahein to custom OpenAI
+      API key bhi save kar sakte hain.</p>
+    <form id="openai-form">
+      <label for="openai-api-key">OpenAI API Key (Optional)</label>
+      <div class="key-field"><input id="openai-api-key" type="password" autocomplete="off"
+          placeholder="sk-proj-… (Optional agar Codex CLI active hai)" maxlength="512"><button class="reveal-key"
+          id="reveal-openai-key" type="button">Dikhaayein</button></div>
+      <small id="openai-notice">✅ Local Codex CLI se aapka account (kumaranil70115@gmail.com) connected hai.</small>
+      <div class="modal-actions"><button class="send-button" type="submit"><span>OpenAI Key Save
+            karein</span><b>✓</b></button></div>
+      <div class="settings-feedback" id="openai-feedback" role="status"></div>
+    </form>
+  </dialog>
+
+  <!-- GOOGLE TOOLS MODAL -->
+  <dialog id="tools-modal" class="settings-modal tools-modal">
+    <div class="modal-close-row"><button class="icon-button modal-close-btn" type="button" aria-label="Band karein">×</button></div>
+    <div class="modal-icon tools-icon">🧰</div><span class="eyebrow">GOOGLE ECOSYSTEM</span>
+    <h2>Connected Google Tools</h2>
+    <div class="tools-account-banner">
+      <span>👤 Connected Account: <strong id="tools-account-email">kumaranil70115@gmail.com</strong></span>
+      <span>● Active Sync</span>
+    </div>
+    <p class="modal-copy">Yeh sabhi tools aapki ek hi Gmail ID se connected hain. Kisi bhi tool ko yahan se open karein
+      ya chat mein bolkar use karein:</p>
+    <div class="tools-grid" id="tools-grid"></div>
+    <div class="modal-actions"><button type="button" class="secondary-button" id="tools-close">Band karein</button>
+    </div>
+  </dialog>
+
+  <!-- DEVICE PERMISSIONS MODAL -->
+  <dialog id="permissions-modal" class="settings-modal perms-modal">
+    <div class="modal-close-row"><button class="icon-button modal-close-btn" type="button" aria-label="Band karein">×</button></div>
+    <div class="modal-icon perms-icon">🛡️</div><span class="eyebrow">SECURITY & PRIVACY</span>
+    <h2>Desktop & Phone Permissions</h2>
+    <div class="tools-account-banner perms-banner">
+      <span>👤 Account: <strong>kumaranil70115@gmail.com</strong></span>
+      <span id="perms-banner-count">0/10 Allowed</span>
+    </div>
+    <p class="modal-copy">
+      Aapke strict aadesh par Smart AI aapke computer aur phone ka WhatsApp, Files, Folders, Apps ya Games bina explicit
+      allow kiye open nahi karega. Niche se permissions ko control karein:
+    </p>
+    <div class="perms-global-actions">
+      <button type="button" class="perms-action-btn allow-all" id="perms-allow-all">✅ Sabhi Allow Karein</button>
+      <button type="button" class="perms-action-btn block-all" id="perms-block-all">⛔ Sabhi Block Karein</button>
+    </div>
+    <div class="perms-list" id="perms-list"></div>
+    <div class="settings-feedback" id="perms-feedback" role="status"></div>
+    <div class="modal-actions"><button type="button" class="secondary-button" id="perms-close">Band karein</button>
+    </div>
+  </dialog>
+
+  <!-- PHONE ACCESS & APP INSTALL MODAL -->
+  <dialog id="phone-modal" class="settings-modal phone-modal">
+    <div class="modal-close-row"><button class="icon-button modal-close-btn" type="button" aria-label="Band karein">×</button></div>
+    <div class="modal-icon phone-icon">📱</div><span class="eyebrow">MOBILE ACCESS & PWA APP</span>
+    <h2>Phone me Smart AI chalaayein</h2>
+    <p class="modal-copy">Aap apne phone ke <strong>Google Chrome</strong> ya <strong>App</strong> ke roop me poora
+      setup chala sakte hain.</p>
+
+    <div class="phone-qr-card">
+      <div class="phone-qr-box">
+        <img id="phone-qr-img" src="/api/phone/qr" alt="Scan QR code">
+      </div>
+      <div class="phone-qr-details">
+        <span class="eyebrow" style="color:#38bdf8;font-weight:700">🌐 SECURE HTTPS PHONE LINK (RECOMMENDED)</span>
+        <div class="key-field" style="margin-top:4px">
+          <input id="phone-tunnel-url-field" type="text" readonly placeholder="Secure tunnel link load ho raha hai...">
+          <button class="reveal-key" id="phone-tunnel-copy-btn" type="button">Copy 📋</button>
+        </div>
+        <small id="phone-tunnel-notice" style="color:#55f299;display:block;margin:3px 0 10px">✨ Kisi bhi phone (4G/5G/Wi-Fi) par chalega + Voice Mic 100% active rahega!</small>
+
+        <span class="eyebrow" style="color:#94a3b8;font-weight:700">🏠 LOCAL WI-FI LINK (SAME WI-FI)</span>
+        <div class="key-field" style="margin-top:4px">
+          <input id="phone-url-field" type="text" readonly placeholder="Local Wi-Fi link load ho raha hai...">
+          <button class="reveal-key" id="phone-copy-btn" type="button">Copy 📋</button>
+        </div>
+        <div style="margin-top:6px;display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+          <button type="button" class="secondary-button" id="fix-firewall-btn" style="font-size:10px;padding:5px 9px;border-color:rgba(56,189,248,0.4);color:#38bdf8">🛡️ Windows Firewall Allow Karein (1-Click Fix)</button>
+          <span id="firewall-status" style="font-size:10px;color:#94a3b8"></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="phone-steps-list">
+      <div class="phone-step-item">
+        <span class="phone-step-num">1</span>
+        <div class="phone-step-text">
+          <strong>Phone Connect:</strong>
+          <p>Apne phone aur computer ko aapas me connect karke access karein.</p>
+        </div>
+      </div>
+      <div class="phone-step-item">
+        <span class="phone-step-num">2</span>
+        <div class="phone-step-text">
+          <strong>Chrome me Kholiye:</strong>
+          <p>Phone me Google Chrome open karke upar diya hua link daalein ya QR scan karein.</p>
+        </div>
+      </div>
+      <div class="phone-step-item">
+        <span class="phone-step-num">3</span>
+        <div class="phone-step-text">
+          <strong>Phone me App Install karein:</strong>
+          <p>Chrome ke 3-dots (⋮) menu par tap karke <strong>"Install app"</strong> ya <strong>"Add to Home screen"</strong> dabayein. Smart AI bina Play Store ke bhi full app ban jayega!</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Play Store & Android APK Builder Card -->
+    <div class="phone-playstore-card">
+      <div class="ppb-header">
+        <span class="ppb-icon">🏪</span>
+        <div>
+          <strong>Google Play Store & Android APK Package</strong>
+          <small>Play Store ready .aab bundle aur signed APK</small>
+        </div>
+      </div>
+      <p class="ppb-desc">
+        Smart AI me Play Store TWA (Trusted Web Activity) standard compliant manifests shamil hain. Aap <code>build_android_apk.bat</code> chala kar direct Android APK aur Play Store bundle bana sakte hain.
+      </p>
+      <div class="ppb-actions">
+        <a href="https://www.pwabuilder.com/" target="_blank" rel="noopener noreferrer" class="send-button ppb-btn"><span>Play Store PWABuilder ↗</span></a>
+        <button type="button" class="secondary-button" id="copy-apk-cmd-btn" title="Copy APK build command">build_android_apk.bat 📋</button>
+      </div>
+    </div>
+
+    <button class="send-button pwa-install-btn" id="pwa-install-btn" type="button" style="width:100%;margin-top:14px"
+      hidden><span>📲 Is Device par App Install Karein</span><b>↓</b></button>
+    <div class="modal-actions"><button type="button" class="secondary-button" id="phone-close">Band karein</button>
+    </div>
+  </dialog>
+
+  <!-- WORLD WEATHER MODAL -->
+  <dialog id="weather-modal" class="settings-modal weather-modal">
+    <div class="modal-close-row"><button class="icon-button modal-close-btn" type="button" aria-label="Band karein">×</button></div>
+    <div class="modal-icon weather-icon">🌤️</div><span class="eyebrow">GOOGLE & LIVE WORLD WEATHER</span>
+    <h2>Duniya Ka Live Mausam</h2>
+    <div class="tools-account-banner weather-banner">
+      <span>🌍 Global Weather: <strong>Live Open & Google Grounded</strong></span>
+      <span class="terminal-badge-live">● Live Sync</span>
+    </div>
+    <p class="modal-copy">
+      World mein kisi bhi shehar, gaon ya desh ka live taapmaan (temperature), hawa, nami aur aane wale dino ka mausam
+      dekhein:
+    </p>
+
+    <div class="weather-search-bar">
+      <input type="text" id="weather-search-input"
+        placeholder="Shehar ka naam likhiye (e.g. Delhi, London, Tokyo, Mumbai, Dubai, New York...)" autocomplete="off">
+      <button type="button" class="send-button" id="weather-search-btn"><span>Search</span><b>🔍</b></button>
+    </div>
+
+    <div class="weather-quick-chips">
+      <span class="snippets-label">Shehar:</span>
+      <button type="button" class="snippet-pill weather-chip" data-city="Delhi">📍 Delhi</button>
+      <button type="button" class="snippet-pill weather-chip" data-city="Mumbai">📍 Mumbai</button>
+      <button type="button" class="snippet-pill weather-chip" data-city="Bengaluru">📍 Bengaluru</button>
+      <button type="button" class="snippet-pill weather-chip" data-city="Dubai">🇦🇪 Dubai</button>
+      <button type="button" class="snippet-pill weather-chip" data-city="London">🇬🇧 London</button>
+      <button type="button" class="snippet-pill weather-chip" data-city="New York">🇺🇸 New York</button>
+      <button type="button" class="snippet-pill weather-chip" data-city="Tokyo">🇯🇵 Tokyo</button>
+      <button type="button" class="snippet-pill weather-chip" data-city="Paris">🇫🇷 Paris</button>
+    </div>
+
+    <div class="weather-display-card" id="weather-display-card">
+      <div class="weather-card-loading" id="weather-card-loading" hidden>Mausam check ho raha hai…</div>
+      <div class="weather-card-content" id="weather-card-content">
+        <div class="weather-card-top">
+          <div>
+            <h3 id="w-city-title">Delhi, India</h3>
+            <span class="weather-condition-tag" id="w-cond-text">Saaf Aasman (Clear)</span>
+          </div>
+          <div class="weather-main-icon" id="w-main-icon">☀️</div>
+        </div>
+        <div class="weather-temp-large" id="w-temp-large">--°C</div>
+        <div class="weather-details-grid">
+          <div class="weather-detail-item">
+            <small>Ehsas (Feels Like)</small>
+            <strong id="w-feels-like">--°C</strong>
+          </div>
+          <div class="weather-detail-item">
+            <small>Nami (Humidity)</small>
+            <strong id="w-humidity">--%</strong>
+          </div>
+          <div class="weather-detail-item">
+            <small>Hawa (Wind Speed)</small>
+            <strong id="w-wind">-- km/h</strong>
+          </div>
+          <div class="weather-detail-item">
+            <small>Aaj Range (Min/Max)</small>
+            <strong id="w-range">--° / --°</strong>
+          </div>
+        </div>
+        <div class="weather-forecast-container">
+          <span class="eyebrow" style="margin-bottom:6px">5-DAY FORECAST</span>
+          <div class="weather-forecast-grid" id="w-forecast-grid"></div>
+        </div>
+        <div class="weather-google-link-wrap">
+          <a href="https://www.google.com/search?q=Delhi+weather" target="_blank" rel="noopener" id="w-google-link"
+            class="weather-google-btn">
+            <span>Google Weather par vistaar se dekhein</span> <b>↗</b>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-actions"><button type="button" class="secondary-button" id="weather-close">Band karein</button>
+    </div>
+  </dialog>
+
+  <!-- CMD TERMINAL & PYTHON ENGINE MODAL -->
+  <dialog id="cmd-modal" class="settings-modal cmd-modal">
+    <div class="modal-close-row"><button class="icon-button modal-close-btn" type="button" aria-label="Band karein">×</button></div>
+    <div class="modal-icon cmd-icon">&gt;_</div><span class="eyebrow">TERMINAL & AI CODE RUNNER</span>
+    <h2>CMD & Python Engine</h2>
+    <div class="tools-account-banner terminal-banner">
+      <span>⚡ Python: <strong id="cmd-py-version">Python 3.12</strong></span>
+      <span>💻 Mode: <strong>Windows CMD (codex + antigravity)</strong></span>
+      <span class="terminal-badge-live">● Ready</span>
+    </div>
+    <p class="modal-copy">
+      Antigravity aur OpenAI Codex coding ke liye is CMD terminal aur Python engine ka upyog karte hain. Aap yahan se
+      direct Python AI code ya Windows CMD command run kar sakte hain:
+    </p>
+
+    <div class="terminal-tabs">
+      <button type="button" class="terminal-tab active" id="tab-py">🐍 Python Script (AI Coding)</button>
+      <button type="button" class="terminal-tab" id="tab-cmd">💻 Windows CMD Shell</button>
+    </div>
+
+    <div class="terminal-snippets">
+      <span class="snippets-label">Templates:</span>
+      <button type="button" class="snippet-pill" id="snip-ai-test">🧠 AI Script Test</button>
+      <button type="button" class="snippet-pill" id="snip-pip-list">📦 Pip List</button>
+      <button type="button" class="snippet-pill" id="snip-sys-info">⚙ System Info</button>
+      <button type="button" class="snippet-pill" id="snip-calc">∑ Math Test</button>
+    </div>
+
+    <div class="terminal-editor-wrap">
+      <div class="terminal-editor-header">
+        <span id="terminal-mode-label">🐍 Python 3.12 Script:</span>
+        <span class="editor-hint">Ctrl+Enter to Run</span>
+      </div>
+      <textarea id="terminal-code-input" class="terminal-code-input" spellcheck="false" placeholder="# Python code likhiye...
+import sys, math
+print('Smart AI Python Terminal Ready!')
+print(f'Python version: {sys.version}')
+">import sys, math
+print("=== SMART AI PYTHON ENGINE ===")
+print(f"Python: {sys.version.split()[0]}")
+print(f"Workspace: {sys.executable}")
+print("Antigravity & Codex Coding Active!")
+</textarea>
+    </div>
+
+    <div class="terminal-controls">
+      <button type="button" class="send-button" id="terminal-run-btn"><span>Run Karein ▶</span><b>↵</b></button>
+      <button type="button" class="secondary-button" id="terminal-clear-btn">Clear Editor</button>
+      <button type="button" class="secondary-button" id="terminal-copy-out-btn">Copy Output 📋</button>
+    </div>
+
+    <div class="terminal-output-card">
+      <div class="terminal-output-header">
+        <div class="terminal-dots"><i></i><i></i><i></i></div>
+        <span class="terminal-title">CMD CONSOLE OUTPUT</span>
+        <div class="terminal-meta">
+          <span id="terminal-status-tag" class="tag-ready">IDLE</span>
+          <span id="terminal-elapsed-tag">0 ms</span>
+        </div>
+      </div>
+      <pre class="terminal-output"
+        id="terminal-output-text">Output yahan dikhega. 'Run Karein' par click karein ya Ctrl+Enter dabayein.</pre>
+    </div>
+
+    <div class="modal-actions"><button type="button" class="secondary-button" id="cmd-close">Band karein</button></div>
+  </dialog>
+
+  <!-- VERSION & UPDATE MODAL -->
+  <dialog id="version-modal" class="settings-modal version-modal">
+    <div class="modal-close-row"><button class="icon-button modal-close-btn" id="version-close-x" type="button" aria-label="Band karein">×</button></div>
+    <div class="modal-icon version-icon">🏷️</div><span class="eyebrow">VERSION CONTROL & RELEASES</span>
+    <h2>Smart AI Version Manager</h2>
+    <p class="modal-copy">Aap Smart AI ko naya Version (v) de sakte hain. Update karne par saari files naye folder me
+      safe copy ho jayengi aur version update ho jayega.</p>
+
+    <div class="version-card">
+      <div>
+        <span class="version-meta-label">CURRENT ACTIVE VERSION</span>
+        <span class="version-meta-val" id="modal-cur-version">v2.0.0</span>
+      </div>
+      <div>
+        <span class="version-meta-label">STATUS</span>
+        <span class="tag-ready"
+          style="font-size:11px;padding:3px 8px;border-radius:4px;background:#10b98133;color:#34d399">● Active</span>
+      </div>
+    </div>
+
+    <form id="version-form">
+      <label for="new-version-input">Naya Version Number daalein (v):</label>
+      <div class="key-field">
+        <input id="new-version-input" type="text" placeholder="e.g. v2.1.0 ya v3.0" required maxlength="30"
+          value="v2.1.0">
+      </div>
+
+      <label for="version-target-select" style="margin-top:12px">Naya Folder Kahan Banayein?</label>
+      <div class="key-field">
+        <select id="version-target-select"
+          style="width:100%;background:transparent;border:none;color:inherit;padding:10px;font-size:12px;outline:none">
+          <option value="parent" selected>C:\Users\DELL\SmartAI_&lt;version&gt; (Bahar alag folder - Recommended)
+          </option>
+          <option value="subfolder">SmartAI\versions\SmartAI_&lt;version&gt; (SmartAI ke andar)</option>
+        </select>
+      </div>
+
+      <label for="version-note-input" style="margin-top:12px">Update Note / Vivran (Optional):</label>
+      <div class="key-field">
+        <input id="version-note-input" type="text" placeholder="e.g. Added new AI tools & features" maxlength="200">
+      </div>
+
+      <div style="margin-top:10px;display:flex;align-items:center;gap:8px">
+        <input type="checkbox" id="version-overwrite-check">
+        <label for="version-overwrite-check" style="margin:0;font-size:11px;color:#94a3b8;cursor:pointer">Folder pehle
+          se maujood ho to overwrite karein</label>
+      </div>
+
+      <div class="modal-actions" style="margin-top:16px">
+        <button type="button" class="secondary-button modal-close-btn" id="version-cancel-btn">Cancel</button>
+        <button class="send-button" type="submit" id="version-submit-btn"><span>Naya Version & Folder Banayein
+            🚀</span></button>
+      </div>
+      <div class="settings-feedback" id="version-feedback" role="status"></div>
+    </form>
+
+    <hr class="modal-divider" style="margin:16px 0">
+
+    <div class="section-heading" style="margin-bottom:8px"><span class="eyebrow">CREATED VERSIONS HISTORY</span></div>
+    <div class="version-list" id="version-history-list">
+      <div style="font-size:11px;color:#8b9bb1">Loading versions...</div>
+    </div>
+
+    <div class="privacy-note" style="margin-top:14px">
+      💡 <b>1-Click Desktop Update:</b> Aap SmartAI folder me <code>create_new_version.bat</code> par double-click karke
+      bhi naya version bana sakte hain!
+    </div>
+  </dialog>
+
+  <!-- SELF-LEARNING & FEEDBACK MODAL -->
+  <dialog id="learning-modal" class="settings-modal learning-modal">
+    <div class="modal-close-row"><button class="icon-button modal-close-btn" id="learning-close-x" type="button" aria-label="Band karein">×</button></div>
+    <div class="modal-icon learning-icon">🌟</div><span class="eyebrow">CONTINUOUS SELF-LEARNING & AUTO-IMPROVE</span>
+    <h2>Smart AI Self-Learning Engine</h2>
+    <p class="modal-copy">Smart AI har ek jawab par aapke diye gaye Stars ⭐ aur sujhav/corrections se seekhta hai. Purani galtiyan dobara nahi dohrata aur context me yaad rakhta hai.</p>
+
+    <div class="learning-stats-grid">
+      <div class="learning-stat-card main-score">
+        <span class="learning-stat-val" id="learning-modal-avg">5.0</span>
+        <div class="learning-stat-stars" id="learning-modal-stars">⭐⭐⭐⭐⭐</div>
+        <span class="learning-stat-label"><span id="learning-modal-total">0</span> Ratings mili hain</span>
+      </div>
+      <div class="learning-breakdown" id="learning-modal-breakdown">
+        <div class="lb-row"><span>5★</span><div class="lb-bar"><div class="lb-fill" id="lb-fill-5" style="width:100%"></div></div><span id="lb-cnt-5">0</span></div>
+        <div class="lb-row"><span>4★</span><div class="lb-bar"><div class="lb-fill" id="lb-fill-4" style="width:0%"></div></div><span id="lb-cnt-4">0</span></div>
+        <div class="lb-row"><span>3★</span><div class="lb-bar"><div class="lb-fill" id="lb-fill-3" style="width:0%"></div></div><span id="lb-cnt-3">0</span></div>
+        <div class="lb-row"><span>2★</span><div class="lb-bar"><div class="lb-fill" id="lb-fill-2" style="width:0%"></div></div><span id="lb-cnt-2">0</span></div>
+        <div class="lb-row"><span>1★</span><div class="lb-bar"><div class="lb-fill" id="lb-fill-1" style="width:0%"></div></div><span id="lb-cnt-1">0</span></div>
+      </div>
+    </div>
+
+    <hr class="modal-divider" style="margin:16px 0">
+
+    <div class="section-heading" style="margin-bottom:8px">
+      <span class="eyebrow">🧠 SIKHE GAYE NIYAM AUR CORRECTIONS (<span id="learned-rules-count">0</span>)</span>
+    </div>
+    <div class="learned-rules-list" id="learned-rules-list">
+      <div style="font-size:11px;color:#8b9bb1">Loading learned rules...</div>
+    </div>
+
+    <div class="privacy-note" style="margin-top:14px">
+      💡 <b>Kaise Kaam Karta Hai?</b> Har AI jawab ke niche bani ⭐ stars rating se aap Smart AI ko 1-5 star de sakte hain. Agar kam star ho, to correction likhiye — Smart AI use turant apne dimag (learning memory) me permanently save kar lega!
+    </div>
+
+    <div class="modal-actions" style="margin-top:16px;display:flex;justify-content:space-between">
+      <button type="button" class="secondary-button" id="learning-reset-btn" style="color:#ef4444;border-color:#ef444433">Reset Learning Memory</button>
+      <button type="button" class="secondary-button modal-close-btn" id="learning-close-btn">Band karein</button>
+    </div>
+  </dialog>
+
+  <!-- OPEN-SOURCE AI AGENTS HUB MODAL (GITHUB LINKED) -->
+  <dialog id="agents-modal" class="settings-modal agents-modal">
+    <div class="modal-close-row"><button class="icon-button modal-close-btn" id="agents-close-x" type="button" aria-label="Band karein">×</button></div>
+    <div class="modal-icon agents-icon">🤖</div><span class="eyebrow">OPEN-SOURCE & GOOGLE AI AGENTS DIRECTORY</span>
+    <h2>Free GitHub & Google AI Agents Hub (26 Agents)</h2>
+    <p class="modal-copy">Google DeepMind, Firebase, Microsoft aur GitHub community ke top 26 free open-source AI agents. Direct use karein, repo kholein ya clone karke use karein.</p>
+
+    <div class="agents-controls">
+      <div class="key-field agents-search-wrap">
+        <input type="text" id="agents-search-input" placeholder="Search agents (e.g. Google Genkit, AutoGPT, CrewAI, AutoGen, Ollama)..." />
+      </div>
+      <div class="agents-category-filters" id="agents-cat-filters">
+        <button type="button" class="agents-cat-pill active" data-cat="all">All (26)</button>
+        <button type="button" class="agents-cat-pill" data-cat="google ai">Google AI (3)</button>
+        <button type="button" class="agents-cat-pill" data-cat="autonomous">Autonomous</button>
+        <button type="button" class="agents-cat-pill" data-cat="multi-agent">Multi-Agent</button>
+        <button type="button" class="agents-cat-pill" data-cat="coding">Coding & System</button>
+        <button type="button" class="agents-cat-pill" data-cat="local llm">Local LLMs</button>
+        <button type="button" class="agents-cat-pill" data-cat="frameworks">Frameworks</button>
+      </div>
+    </div>
+
+    <div class="agents-grid" id="agents-grid">
+      <div style="font-size:11px;color:#8b9bb1;padding:12px">Loading open-source AI agents...</div>
+    </div>
+
+    <div class="privacy-note" style="margin-top:14px">
+      💡 <b>Open-Source Advantage:</b> Yeh saare agents 100% Free aur Open-Source hain. Inke GitHub code ko aap customize kar sakte hain aur apne computer par locally chala sakte hain!
+    </div>
+
+    <div class="modal-actions" style="margin-top:16px">
+      <button type="button" class="secondary-button modal-close-btn" id="agents-close-btn">Band karein</button>
+    </div>
+  </dialog>
+
+  <!-- SMART BACKGROUND MEDIA & YOUTUBE PLAYER (PHONE & PC) -->
+  <div class="smart-bg-media-player" id="smart-bg-media-player" hidden>
+    <div class="bg-player-bar">
+      <div class="bg-player-disc-spin" id="bg-player-disc">💿</div>
+      <div class="bg-player-info">
+        <strong id="bg-player-title">YouTube Background Media</strong>
+        <small id="bg-player-status">Background me play ho raha hai...</small>
+      </div>
+      <div class="bg-player-actions">
+        <a id="bg-player-open-link" href="https://www.youtube.com" target="_blank" class="bg-player-link-btn" title="YouTube App/Tab me dekhein">▶️ Kholo</a>
+        <button type="button" class="bg-player-btn" id="bg-player-toggle-btn" title="Pause / Play">⏸</button>
+        <button type="button" class="bg-player-btn" id="bg-player-min-btn" title="Minimize / Expand">_</button>
+        <button type="button" class="bg-player-btn" id="bg-player-close-btn" title="Band karein">✕</button>
+      </div>
+    </div>
+    <div class="bg-player-frame-box" id="bg-player-frame-box">
+      <iframe id="bg-player-iframe" src="" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
+    </div>
+  </div>
+
+</body>
+
+</html>

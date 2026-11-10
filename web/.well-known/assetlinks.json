@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.smartai.assistant",
+      "sha256_cert_fingerprints": [
+        "BD:08:0C:63:F7:A4:A8:4C:6B:7D:B4:EC:0B:32:C0:50:22:1E:0B:69:33:AA:AA:E9:DC:48:B8:44:1D:64:8C:1C"
+      ]
+    }
+  }
+]

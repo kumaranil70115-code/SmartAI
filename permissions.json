@@ -1,0 +1,32 @@
+{
+  "camera": {
+    "allowed": true
+  },
+  "contacts": {
+    "allowed": true
+  },
+  "location": {
+    "allowed": true
+  },
+  "microphone": {
+    "allowed": true
+  },
+  "audio": {
+    "allowed": true
+  },
+  "notifications": {
+    "allowed": true
+  },
+  "phone": {
+    "allowed": true
+  },
+  "call_logs": {
+    "allowed": true
+  },
+  "media": {
+    "allowed": true
+  },
+  "system_apps": {
+    "allowed": true
+  }
+}

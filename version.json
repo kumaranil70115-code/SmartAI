@@ -1,0 +1,22 @@
+{
+  "version": "v2.2.0",
+  "version_name": "SmartAI v2.2.0",
+  "created_at": "2026-10-28",
+  "release_name": "Smart AI Multi-Engine Release",
+  "description": "Smart AI Assistant - Gemini, OpenAI Codex, Phone Access, CMD Terminal, World Weather & Google Tools",
+  "history": [
+    {
+      "version": "v2.0.0",
+      "date": "2026-10-28",
+      "folder": "C:\\Users\\DELL\\SmartAI",
+      "note": "Base Release with Version Management"
+    },
+    {
+      "version": "v2.2.0",
+      "date": "2026-11-08 22:32:13",
+      "folder": "C:\\Users\\DELL\\SmartAI_v2.2.0",
+      "note": "Voice/Chat user command: turn khud se new version update kro"
+    }
+  ],
+  "updated_at": "2026-11-08 22:32:13"
+}

@@ -1,0 +1,14 @@
+{
+  "users": [
+    {
+      "id": "user_admin_001",
+      "name": "Krishna Anil",
+      "login_id": "kumaranil70115@gmail.com",
+      "phone": "7011500000",
+      "password_hash": "382480607f3c029d4c38c3e0657833d45d8c3d02b10a7a37fffec9122edacdc0",
+      "role": "admin",
+      "created_at": "2026-11-09 20:44:50"
+    }
+  ],
+  "sessions": {}
+}

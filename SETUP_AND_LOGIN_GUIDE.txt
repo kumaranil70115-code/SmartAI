@@ -1,0 +1,33 @@
+========================================================================
+           SMART AI ASSISTANT (v2.0.0) - OFFICIAL SETUP GUIDE           
+                        Developer: Krishna Anil                         
+========================================================================
+
+Aapka Smart AI Assistant setup safalta se download ho chuka hai!
+
+------------------------------------------------------------------------
+1. KAISE CHALAYEIN (HOW TO RUN):
+------------------------------------------------------------------------
+1. Is ZIP file ko kisi bhi folder me Extract (Unzip) karein.
+2. Make sure computer me Python 3.10 ya newer installed ho (python.org).
+3. Folder me jakar 'start.bat' par double click karein.
+4. Aapka browser automatic open ho jayega: http://127.0.0.1:8765
+5. Koi bhi login ya registration nahi chahiye — AI direct active hoga!
+
+------------------------------------------------------------------------
+2. PHONE SE KAISE CONNECT KAREIN:
+------------------------------------------------------------------------
+1. Apne computer aur phone ko connect karein (Phone Access).
+2. Ek baar 'allow_phone_access.bat' run karke firewall allow karein.
+3. Browser me '📱' icon par click karein aur phone camera se QR scan karein.
+4. Smart AI aapke mobile phone me khul jayega!
+
+------------------------------------------------------------------------
+3. FEATURES SHAMIL HAIN:
+------------------------------------------------------------------------
+• Triple AI Engine: Gemini 3.8 Flash + OpenAI Codex CLI + Antigravity AI
+• Live World Weather & 8 Google Connected Tools
+• CMD & Python 3.12 Coding Terminal (Ctrl+Enter to Run)
+• Hindi Voice Assistant (Boliye aur Suniye)
+• Version & Update Manager ('create_new_version.bat')
+========================================================================

@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "smart-ai-assistant": {
+      "command": "C:\\Users\\DELL\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+      "args": [
+        "-u",
+        "C:\\Users\\DELL\\SmartAI\\mcp_server.py"
+      ],
+      "env": {
+        "PYTHONPATH": "C:\\Users\\DELL\\SmartAI"
+      }
+    }
+  }
+}

@@ -1,0 +1,391 @@
+{
+  "total_ratings": 28,
+  "average_rating": 3.5,
+  "star_counts": {
+    "1": 0,
+    "2": 8,
+    "3": 7,
+    "4": 5,
+    "5": 8
+  },
+  "learned_rules": [
+    {
+      "id": "rule_1794284355",
+      "topic": "General Query",
+      "rule": "Sawaal 'General Query' ke baare mein user correction: Acha laga / Perfect",
+      "created_at": "2026-11-09 20:19"
+    },
+    {
+      "id": "rule_1794211889",
+      "topic": "YouTube kholo or video play kro",
+      "rule": "Sawaal 'YouTube kholo or video play kro' ke baare mein user correction: Open ni hua hai",
+      "created_at": "2026-11-09 00:11"
+    },
+    {
+      "id": "rule_1794211838",
+      "topic": "Abhi open ni hua hai",
+      "rule": "Sawaal 'Abhi open ni hua hai' ke baare mein user correction: Ni khula",
+      "created_at": "2026-11-09 00:10"
+    },
+    {
+      "id": "rule_1794211514",
+      "topic": "General Query",
+      "rule": "Sawaal 'General Query' ke baare mein user correction: Acha laga / Perfect",
+      "created_at": "2026-11-09 00:05"
+    },
+    {
+      "id": "rule_1794211280",
+      "topic": "General Query",
+      "rule": "Sawaal 'General Query' ke baare mein user correction: Acha laga / Perfect",
+      "created_at": "2026-11-09 00:01"
+    },
+    {
+      "id": "rule_1794210691",
+      "topic": "Step 2: Ab is strategy ka technical architecture, timeline r",
+      "rule": "Sawaal 'Step 2: Ab is strategy ka technical architecture, timeline r' ke baare mein user correction: Acha laga / Perfect",
+      "created_at": "2026-11-08 23:51"
+    },
+    {
+      "id": "rule_1794210678",
+      "topic": "Jo mai bolta hu vo barbar reply hota hai ushe thik kro",
+      "rule": "Sawaal 'Jo mai bolta hu vo barbar reply hota hai ushe thik kro' ke baare mein user correction: Acha laga / Perfect",
+      "created_at": "2026-11-08 23:51"
+    },
+    {
+      "id": "rule_1794210331",
+      "topic": "Tumhara naam ky hai",
+      "rule": "Sawaal 'Tumhara naam ky hai' ke baare mein user correction: Acha laga / Perfect",
+      "created_at": "2026-11-08 23:45"
+    },
+    {
+      "id": "rule_1794208598",
+      "topic": "tumhe total kitni bhasaye aati hai",
+      "rule": "Sawaal 'tumhe total kitni bhasaye aati hai' ke baare mein user correction: Acha laga / Perfect",
+      "created_at": "2026-11-08 23:16"
+    },
+    {
+      "id": "rule_1794208549",
+      "topic": "tumhe kitni bhasa aati hai",
+      "rule": "Sawaal 'tumhe kitni bhasa aati hai' ke baare mein user correction: Acha laga / Perfect",
+      "created_at": "2026-11-08 23:15"
+    },
+    {
+      "id": "rule_1794208505",
+      "topic": "tumhara naam ky hai",
+      "rule": "Sawaal 'tumhara naam ky hai' ke baare mein user correction: Acha laga / Perfect",
+      "created_at": "2026-11-08 23:15"
+    },
+    {
+      "id": "rule_1794206667",
+      "topic": "kl delhi mai kesa mosam rahega",
+      "rule": "Sawaal 'kl delhi mai kesa mosam rahega' ke baare mein user correction: Acha laga / Perfect",
+      "created_at": "2026-11-08 22:44"
+    },
+    {
+      "id": "rule_1794206596",
+      "topic": "delhi mai kl mosam kesa rahega",
+      "rule": "Sawaal 'delhi mai kl mosam kesa rahega' ke baare mein user correction: Acha laga / Perfect",
+      "created_at": "2026-11-08 22:43"
+    },
+    {
+      "id": "rule_1794206228",
+      "topic": "Google Gemma Agents ki help se:",
+      "rule": "Sawaal 'Google Gemma Agents ki help se:' ke baare mein user correction: Acha laga / Perfect",
+      "created_at": "2026-11-08 22:37"
+    },
+    {
+      "id": "rule_1794206221",
+      "topic": "tum kish kam krte ho",
+      "rule": "Sawaal 'tum kish kam krte ho' ke baare mein user correction: Acha laga / Perfect",
+      "created_at": "2026-11-08 22:37"
+    },
+    {
+      "id": "rule_init_1",
+      "topic": "Autonomous Actions",
+      "rule": "Jab user bole 'tum khud se naya version update karo' ya koi action bole, to direct execute karein bina 'mere paas permission nahi hai' kahe.",
+      "created_at": "2026-11-08"
+    },
+    {
+      "id": "rule_init_2",
+      "topic": "Speaking Speed & Turn-Taking",
+      "rule": "Jawab bolne mein aasan, seedhe shabdon mein dein taaki aawaz crystal-clear sunai de.",
+      "created_at": "2026-11-08"
+    }
+  ],
+  "feedbacks": [
+    {
+      "id": "fb_1794284355065",
+      "rating": 4,
+      "query": "",
+      "response_snippet": "URI malformed Settings ya network check karke koshish karein.",
+      "feedback": "Acha laga / Perfect",
+      "tags": [],
+      "created_at": "2026-11-09 20:19"
+    },
+    {
+      "id": "fb_1794284200140",
+      "rating": 2,
+      "query": "",
+      "response_snippet": "URI malformed Dobara boliye.",
+      "feedback": "",
+      "tags": [],
+      "created_at": "2026-11-09 20:16"
+    },
+    {
+      "id": "fb_1794284194695",
+      "rating": 2,
+      "query": "तुम्हारा नाम क्या है",
+      "response_snippet": "Arre yaar, lagta hai aap mere naam se thoda sa pyaar se mazak kar rahe hain ya phir pichli baatein yaad dila rahe hain! 😄 \n\nJaisa ki maine pehle bhi bataya tha, mera naam **Smart AI** hai — aapka apna dost, saathi aur helper! \n\nPichli baaton se maine yeh bhi seekh liya hai ki aapko seedhi, saaf aur ",
+      "feedback": "",
+      "tags": [
+        "Format ya Point-Wise"
+      ],
+      "created_at": "2026-11-09 20:16"
+    },
+    {
+      "id": "fb_1794284187899",
+      "rating": 2,
+      "query": "",
+      "response_snippet": "URI malformed Dobara boliye.",
+      "feedback": "",
+      "tags": [],
+      "created_at": "2026-11-09 20:16"
+    },
+    {
+      "id": "fb_1794284183472",
+      "rating": 2,
+      "query": "तुम्हारा नाम क्या है",
+      "response_snippet": "Arre, lagta hai aap mera naam dobara test kar rahe hain! 😉 \n\nMain fir se bata deta hoon — mera naam **Smart AI** hai, aapka apna dost aur saathi! \n\nBataiye dost, aaj aapke liye kya karoon? Koi nayi app kholni hai, kuch search karna hai, ya bas aise hi baatein karni hain? Hukam kijiye! 🤝✨",
+      "feedback": "",
+      "tags": [
+        "Galat Jankari"
+      ],
+      "created_at": "2026-11-09 20:16"
+    },
+    {
+      "id": "fb_1794284173891",
+      "rating": 2,
+      "query": "",
+      "response_snippet": "URI malformed Dobara boliye.",
+      "feedback": "",
+      "tags": [],
+      "created_at": "2026-11-09 20:16"
+    },
+    {
+      "id": "fb_1794284165750",
+      "rating": 2,
+      "query": "तुम्हारा नाम क्या है",
+      "response_snippet": "Arre waah! Aapne itne pyaar se poochha toh batata hoon — mera naam **Smart AI** hai! 😊 \n\nMain aapka apna dost aur saathi hoon, jo aapki har mushkil ko aasan karne aur aapke har sawaal ka jawab dene ke liye hamesha taiyar rehta hai. \n\nBataiye, aaj main aapki kya madad karoon? Koi nayi cheez karni hai",
+      "feedback": "",
+      "tags": [
+        "Galat Jankari"
+      ],
+      "created_at": "2026-11-09 20:16"
+    },
+    {
+      "id": "fb_1794211889853",
+      "rating": 2,
+      "query": "YouTube kholo or video play kro",
+      "response_snippet": "YouTube safalta se open ho gaya hai.",
+      "feedback": "Open ni hua hai",
+      "tags": [
+        "Galat Jankari"
+      ],
+      "created_at": "2026-11-09 00:11"
+    },
+    {
+      "id": "fb_1794211838925",
+      "rating": 2,
+      "query": "Abhi open ni hua hai",
+      "response_snippet": "Maaf kijiye, main abhi turant YouTube kholkar aapke liye purana gaana play kar raha hoon. Thoda sa samay dijiye, abhi browser launch ho raha hai.",
+      "feedback": "Ni khula",
+      "tags": [
+        "Galat Jankari"
+      ],
+      "created_at": "2026-11-09 00:10"
+    },
+    {
+      "id": "fb_1794211810032",
+      "rating": 3,
+      "query": "Tum youtube open kro or usmai koi old song chlao",
+      "response_snippet": "YouTube safalta se open ho gaya hai.",
+      "feedback": "",
+      "tags": [
+        "Galat Jankari"
+      ],
+      "created_at": "2026-11-09 00:10"
+    },
+    {
+      "id": "fb_1794211514716",
+      "rating": 5,
+      "query": "",
+      "response_snippet": "Bilkul! Main abhi aapke computer par YouTube khol raha hoon aur aapka pasandida gana chala raha hoon. Thoda intezaar kijiye, action execute ho raha hai.",
+      "feedback": "Acha laga / Perfect",
+      "tags": [],
+      "created_at": "2026-11-09 00:05"
+    },
+    {
+      "id": "fb_1794211280288",
+      "rating": 5,
+      "query": "",
+      "response_snippet": "नमस्ते! मैं आपका स्मार्ट एआई असिस्टेंट हूँ। मेरा मुख्य काम आपके कंप्यूटर और रोजमर्रा के काम को आसान और पूरी तरह से ऑटोमैटिक बनाना है। \n\nमैं आपके लिए कई तरह के काम कर सकता हूँ, जैसे:\n1. कंप्यूटर पर ऐप्स चलाना, फाइल मैनेज करना, और आपके कहने पर सिस्टम में बदलाव करना।\n2. गूगल टूल्स जैसे मैप्स, यूट्यूब, ",
+      "feedback": "Acha laga / Perfect",
+      "tags": [],
+      "created_at": "2026-11-09 00:01"
+    },
+    {
+      "id": "fb_1794210714040",
+      "rating": 3,
+      "query": "Step 3: Ab is project ka frontend user interface, responsive styles aur verification tests integrate karein.",
+      "response_snippet": "🧠 **Smart AI Autonomous Dispatcher:** Maine is kaam ke liye **CrewAI** (Multi-Agent) ko assign kiya hai kyunki Aapke task ko best quality aur multi-perspective solution dene ke liye CrewAI Multi-Agent Swarm ko chuna gaya hai.\n\n👥 **CREWAI MULTI-AGENT COLLABORATION REPORT:**\n\n1. 🕵️ **Senior Research S",
+      "feedback": "",
+      "tags": [],
+      "created_at": "2026-11-08 23:51"
+    },
+    {
+      "id": "fb_1794210691424",
+      "rating": 4,
+      "query": "Step 2: Ab is strategy ka technical architecture, timeline roadmap aur resource planning formulate karein.",
+      "response_snippet": "🧠 **Smart AI Autonomous Dispatcher:** Maine is kaam ke liye **MetaGPT** (Multi-Agent) ko assign kiya hai kyunki Product design, PRD aur software company architecture ke liye MetaGPT software team ko chuna gaya hai.\n\n🏢 **METAGPT SOFTWARE TEAM OUTPUT:**\n\n1. 📄 **Product Manager (PRD):**\n- **Project Goa",
+      "feedback": "Acha laga / Perfect",
+      "tags": [],
+      "created_at": "2026-11-08 23:51"
+    },
+    {
+      "id": "fb_1794210678008",
+      "rating": 4,
+      "query": "Jo mai bolta hu vo barbar reply hota hai ushe thik kro",
+      "response_snippet": "🧠 **Smart AI Autonomous Dispatcher:** Maine is kaam ke liye **CrewAI** (Multi-Agent) ko assign kiya hai kyunki Aapke task ko best quality aur multi-perspective solution dene ke liye CrewAI Multi-Agent Swarm ko chuna gaya hai.\n\n👥 **CREWAI MULTI-AGENT COLLABORATION REPORT:**\n\n1. 🕵️ **Senior Research S",
+      "feedback": "Acha laga / Perfect",
+      "tags": [],
+      "created_at": "2026-11-08 23:51"
+    },
+    {
+      "id": "fb_1794210598084",
+      "rating": 3,
+      "query": "Step 3: Ab is project ka frontend user interface, responsive styles aur verification tests integrate karein.",
+      "response_snippet": "🧠 **Smart AI Autonomous Dispatcher:** Maine is kaam ke liye **CrewAI** (Multi-Agent) ko assign kiya hai kyunki Aapke task ko best quality aur multi-perspective solution dene ke liye CrewAI Multi-Agent Swarm ko chuna gaya hai.\n\n👥 **CREWAI MULTI-AGENT COLLABORATION REPORT:**\n\n1. 🕵️ **Senior Research S",
+      "feedback": "",
+      "tags": [
+        "Bhasa ya Tone"
+      ],
+      "created_at": "2026-11-08 23:49"
+    },
+    {
+      "id": "fb_1794210331047",
+      "rating": 5,
+      "query": "Tumhara naam ky hai",
+      "response_snippet": "Mera naam Smart AI hai! \n\nAapke pichle feedback ke anusaar, maine ise note kar liya hai ki aapko mera yeh seedha aur saaf jawab pasand aata hai. Bataiye, aaj main aapki kya madad karoon?",
+      "feedback": "Acha laga / Perfect",
+      "tags": [],
+      "created_at": "2026-11-08 23:45"
+    },
+    {
+      "id": "fb_1794210295622",
+      "rating": 3,
+      "query": "",
+      "response_snippet": "🧠 **Smart AI Autonomous Dispatcher:** Maine is kaam ke liye **CrewAI** (Multi-Agent) ko assign kiya hai kyunki Aapke task ko best quality aur multi-perspective solution dene ke liye CrewAI Multi-Agent Swarm ko chuna gaya hai.\n\nNamaste! Mera naam **Smart AI** hai. Aapne ek hi sawaal ko baar-baar dohr",
+      "feedback": "",
+      "tags": [
+        "Galat Jankari"
+      ],
+      "created_at": "2026-11-08 23:44"
+    },
+    {
+      "id": "fb_1794210233507",
+      "rating": 3,
+      "query": "",
+      "response_snippet": "🧠 **Smart AI Autonomous Dispatcher:** Maine is kaam ke liye **CrewAI** (Multi-Agent) ko assign kiya hai kyunki Aapke task ko best quality aur multi-perspective solution dene ke liye CrewAI Multi-Agent Swarm ko chuna gaya hai.\n\nMain English aur kai doosri bhashao mein kayi tarah ke kaam kar sakta hoo",
+      "feedback": "",
+      "tags": [
+        "Galat Jankari"
+      ],
+      "created_at": "2026-11-08 23:43"
+    },
+    {
+      "id": "fb_1794210218415",
+      "rating": 3,
+      "query": "",
+      "response_snippet": "🧠 **Smart AI Autonomous Dispatcher:** Maine is kaam ke liye **CrewAI** (Multi-Agent) ko assign kiya hai kyunki Aapke task ko best quality aur multi-perspective solution dene ke liye CrewAI Multi-Agent Swarm ko chuna gaya hai.\n\nNamaste! Mera naam **Smart AI** hai. Main aapka fully autonomous, Hindi-f",
+      "feedback": "",
+      "tags": [
+        "Format ya Point-Wise"
+      ],
+      "created_at": "2026-11-08 23:43"
+    },
+    {
+      "id": "fb_1794208598993",
+      "rating": 5,
+      "query": "tumhe total kitni bhasaye aati hai",
+      "response_snippet": "Mujhe duniya bhar ki 100 se zyada bhashaayein aati hain, jaise Hindi, English, Hinglish, Urdu, aur bhi bahut saari. Lekin hum sabse achhi baatcheet Hindi aur Hinglish mein kar sakte hain. Bataiye, aaj main aapki kya sahayata karoon?",
+      "feedback": "Acha laga / Perfect",
+      "tags": [],
+      "created_at": "2026-11-08 23:16"
+    },
+    {
+      "id": "fb_1794208549110",
+      "rating": 5,
+      "query": "tumhe kitni bhasa aati hai",
+      "response_snippet": "Mujhe kai bhashaayein aati hain, jaise Hindi, Hinglish aur English. Main in sabhi bhashaon mein aapse baat kar sakta hoon aur aapki madad kar sakta hoon. Bataiye, main aapke liye kya karoon?",
+      "feedback": "Acha laga / Perfect",
+      "tags": [],
+      "created_at": "2026-11-08 23:15"
+    },
+    {
+      "id": "fb_1794208505271",
+      "rating": 5,
+      "query": "tumhara naam ky hai",
+      "response_snippet": "Mera naam Smart AI hai. Main aapka Hindi-first desktop aur voice assistant hoon. Bataiye, aaj main aapki kya madad karoon?",
+      "feedback": "Acha laga / Perfect",
+      "tags": [],
+      "created_at": "2026-11-08 23:15"
+    },
+    {
+      "id": "fb_1794206667728",
+      "rating": 4,
+      "query": "kl delhi mai kesa mosam rahega",
+      "response_snippet": "🧠 **Smart AI Autonomous Dispatcher:** Maine is kaam ke liye **CrewAI** (Multi-Agent) ko assign kiya hai kyunki Aapke task ko best quality aur multi-perspective solution dene ke liye CrewAI Multi-Agent Swarm ko chuna gaya hai.\n\n👥 **CREWAI MULTI-AGENT COLLABORATION REPORT:**\n\n1. 🕵️ **Senior Research S",
+      "feedback": "Acha laga / Perfect",
+      "tags": [],
+      "created_at": "2026-11-08 22:44"
+    },
+    {
+      "id": "fb_1794206596521",
+      "rating": 4,
+      "query": "delhi mai kl mosam kesa rahega",
+      "response_snippet": "🧠 **Smart AI Autonomous Dispatcher:** Maine is kaam ke liye **CrewAI** (Multi-Agent) ko assign kiya hai kyunki Aapke task ko best quality aur multi-perspective solution dene ke liye CrewAI Multi-Agent Swarm ko chuna gaya hai.\n\n👥 **CREWAI MULTI-AGENT COLLABORATION REPORT:**\n\n1. 🕵️ **Senior Research S",
+      "feedback": "Acha laga / Perfect",
+      "tags": [],
+      "created_at": "2026-11-08 22:43"
+    },
+    {
+      "id": "fb_1794206521361",
+      "rating": 3,
+      "query": "delhi",
+      "response_snippet": "माफ़ कीजिए, अभी दिल्ली के कल के मौसम का पूर्वानुमान नहीं मिल पाया।",
+      "feedback": "",
+      "tags": [
+        "Adhoora Jawab"
+      ],
+      "created_at": "2026-11-08 22:42"
+    },
+    {
+      "id": "fb_1794206228408",
+      "rating": 5,
+      "query": "Google Gemma Agents ki help se:",
+      "response_snippet": "🧠 **Smart AI Autonomous Dispatcher:** Maine is kaam ke liye **Google Gemma Agents** (Google AI) ko assign kiya hai kyunki User prompt me Google Gemma open weights ka aadesh diya gaya.\n\nNamaste! Main Google Gemma hoon — aapka open-weights AI agent. Aapke nirdesh ke anusar, main poori tarah se tayar h",
+      "feedback": "Acha laga / Perfect",
+      "tags": [],
+      "created_at": "2026-11-08 22:37"
+    },
+    {
+      "id": "fb_1794206221197",
+      "rating": 5,
+      "query": "tum kish kam krte ho",
+      "response_snippet": "🧠 **Smart AI Autonomous Dispatcher:** Maine is kaam ke liye **CrewAI** (Multi-Agent) ko assign kiya hai kyunki Aapke task ko best quality aur multi-perspective solution dene ke liye CrewAI Multi-Agent Swarm ko chuna gaya hai.\n\nNamaste! Main aapka Smart AI assistant hoon. Main aapke computer par ek p",
+      "feedback": "Acha laga / Perfect",
+      "tags": [],
+      "created_at": "2026-11-08 22:37"
+    }
+  ]
+}
