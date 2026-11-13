@@ -326,7 +326,7 @@ def is_valid_gemini_format(k: str | None) -> bool:
     if not k:
         return False
     k = str(k).strip()
-    return k.startswith("AIzaSy") and len(k) >= 35
+    return len(k) >= 20 and len(k) <= 512 and not any(c in k for c in (" ", "\n", "\r", "\t"))
 
 def _read_env() -> dict[str, str]:
     data = {}
@@ -2033,7 +2033,7 @@ def _fallback_smart_response(message: str, extra_context: str = "", weather_card
         f"🔑 **1 Minute Mein Free Key Kaise Lagayein:**\n"
         f"1. Upar daayein kone mein **Settings (⚙️)** par click karein.\n"
         f"2. **'Free Gemini Key Banayein'** link kholein (Google AI Studio — 100% Free, zero cost).\n"
-        f"3. Key copy karein (`AIzaSy...` se shuru hone wali) aur yahan paste karke **Save** dabayein.\n\n"
+        f"3. Key copy karein aur yahan paste karke **Save** dabayein.\n\n"
         f"Save karte hi main live web search aur sabhi deep topics ke vistaar se jawab dene lagunga! 🚀"
     )
     return {

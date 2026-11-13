@@ -104,7 +104,7 @@ async function refreshStatus(){
   }
 
   const ready=data.gemini==="ready";
-  const gemLabel=ready?"Connected · "+data.model:(data.gemini==="key_format_invalid"?"Format invalid (AIzaSy… chahiye)":"API key zaroori hai");
+  const gemLabel=ready?"Connected · "+data.model:(data.gemini==="key_format_invalid"?"Key format invalid":"API key zaroori hai");
   connection("#gemini-status","#gemini-mark",gemLabel,ready);
   connection("#search-status","#search-mark",ready?"Grounded web jawab ready":"Gemini key ke baad ready",ready);
   connection("#anti-status","#anti-mark",data.antigravity_mcp?"MCP config taiyar":"Config nahi mili",data.antigravity_mcp);
@@ -169,11 +169,11 @@ async function refreshStatus(){
    if(keyNotice) keyNotice.textContent="✅ Gemini Key active hai (Google AI Studio model connected).";
    if(keyInput) keyInput.placeholder="Pehle se saved hai (••••••••••••••)";
   }else if(data.gemini==="key_format_invalid"){
-   if(keyNotice) keyNotice.textContent="⚠️ Key format invalid hai. AI Studio se 'AIzaSy…' wali key daalein.";
-   if(keyInput) keyInput.placeholder="AIzaSy…";
+   if(keyNotice) keyNotice.textContent="⚠️ Key format invalid hai. AI Studio se copy ki gayi key paste karein.";
+   if(keyInput) keyInput.placeholder="Google AI Studio Key...";
   }else{
    if(keyNotice) keyNotice.textContent="ℹ️ Smart AI Live Core chal raha hai. Deep AI search ke liye free Gemini key save karein.";
-   if(keyInput) keyInput.placeholder="AIzaSy…";
+   if(keyInput) keyInput.placeholder="Google AI Studio Key...";
   }
   if(keyHelp){
    keyHelp.textContent=ready?
