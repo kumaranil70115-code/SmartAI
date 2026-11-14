@@ -851,16 +851,60 @@ if (bgPlayerMinBtn && bgPlayerFrameBox) {
 }
 
 if (bgPlayerCloseBtn) {
-  bgPlayerCloseBtn.addEventListener("click", () => {
+  const closePlayerHandler = (e) => {
+    if (e) {
+      try { e.preventDefault(); e.stopPropagation(); } catch (err) {}
+    }
     if (bgPlayer) bgPlayer.hidden = true;
     if (bgPlayerIframe) bgPlayerIframe.src = "";
     isBgMediaPlaying = false;
-  });
+    stopAllAudio();
+  };
+  bgPlayerCloseBtn.addEventListener("click", closePlayerHandler);
+  bgPlayerCloseBtn.addEventListener("touchend", closePlayerHandler);
 }
 
 function handleClientAction(actionData) {
   if (!actionData) return;
   const isMobile = /android|iphone|ipad|ipod/i.test(navigator.userAgent);
+
+  // Auto-Heal (Multi-Agent Self-Repair)
+  if (actionData.type === "auto_heal" || actionData.auto_heal) {
+    if (bgPlayer) bgPlayer.hidden = true;
+    if (bgPlayerIframe) bgPlayerIframe.src = "";
+    isBgMediaPlaying = false;
+    stopAllAudio();
+    if (window.speechSynthesis) {
+      try { window.speechSynthesis.cancel(); } catch (e) {}
+    }
+    // Close any open dialogs/modals
+    document.querySelectorAll("dialog[open]").forEach(d => {
+      try { d.close(); } catch (e) { d.removeAttribute("open"); }
+    });
+    // Refresh permissions state in UI
+    if (typeof loadPermissions === "function") {
+      try { loadPermissions(); } catch (e) {}
+    }
+    // Update server badge
+    const badge = document.querySelector("#status-badge, .status-pill, .status-indicator");
+    if (badge) {
+      badge.textContent = "24/7 Cloud Server Online 🌐 (Self-Healed)";
+      badge.style.color = "#10b981";
+    }
+    return;
+  }
+
+  // Close Media Player & Hide Popups
+  if (actionData.type === "close_media" || actionData.type === "stop_media" || actionData.close_media || actionData.hide_popup) {
+    if (bgPlayer) bgPlayer.hidden = true;
+    if (bgPlayerIframe) bgPlayerIframe.src = "";
+    isBgMediaPlaying = false;
+    stopAllAudio();
+    if (window.speechSynthesis) {
+      try { window.speechSynthesis.cancel(); } catch (e) {}
+    }
+    return;
+  }
 
   if (actionData.type === "youtube" || actionData.type === "play_media") {
     // 1. Play in background player

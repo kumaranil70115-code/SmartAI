@@ -2213,8 +2213,8 @@ input[type="file"].hidden-file-input,
   transform: scale(1.05);
 }
 .bg-player-btn {
-  width: 28px;
-  height: 28px;
+  width: 32px;
+  height: 32px;
   border-radius: 8px;
   border: 1px solid rgba(255, 255, 255, 0.15);
   background: rgba(255, 255, 255, 0.08);
@@ -2222,12 +2222,18 @@ input[type="file"].hidden-file-input,
   cursor: pointer;
   display: grid;
   place-items: center;
-  font-size: 12px;
+  font-size: 13px;
   transition: all 0.2s;
+  touch-action: manipulation;
 }
-.bg-player-btn:hover {
+.bg-player-btn:hover, .bg-player-btn:active {
   background: rgba(255, 255, 255, 0.2);
   color: #ffffff;
+}
+#bg-player-close-btn:hover, #bg-player-close-btn:active {
+  background: rgba(239, 68, 68, 0.5) !important;
+  border-color: rgba(239, 68, 68, 0.9) !important;
+  color: #ffffff !important;
 }
 
 .bg-player-frame-box {
