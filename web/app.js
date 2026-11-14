@@ -607,6 +607,57 @@ function addMessage(role,text,sources=[],options={}){
   }
  }
 
+ // 💬 Interactive WhatsApp Automation Card
+ if(options.whatsapp_card || (options.client_action && options.client_action.type === "whatsapp_send")){
+   const wc = options.whatsapp_card || options.client_action;
+   const waCard = document.createElement("div");
+   waCard.className = "chat-whatsapp-card";
+   const cleanNum = (wc.phone || "").replace(/[^0-9]/g, "");
+   const initialMsg = wc.message_text || "";
+   const initialWaMe = cleanNum ? `https://wa.me/${cleanNum}?text=${encodeURIComponent(initialMsg)}` : `https://api.whatsapp.com/send?text=${encodeURIComponent(initialMsg)}`;
+   const initialWebUrl = cleanNum ? `https://web.whatsapp.com/send?phone=${cleanNum}&text=${encodeURIComponent(initialMsg)}` : `https://web.whatsapp.com/send?text=${encodeURIComponent(initialMsg)}`;
+
+   waCard.innerHTML = `
+     <div class="wa-card-header">
+       <span class="wa-badge">💬 WhatsApp Automation</span>
+       <span class="wa-status-pill">Ready to Send</span>
+     </div>
+     <div class="wa-card-body">
+       <div class="wa-field-row">
+         <span class="wa-label">👤 Recipient:</span>
+         <strong class="wa-val">${wc.contact_name || wc.phone || "WhatsApp Chat"}</strong>
+       </div>
+       ${wc.phone ? `<div class="wa-field-row"><span class="wa-label">📱 Number:</span> <span class="wa-val-phone">${wc.phone}</span></div>` : ''}
+       <div class="wa-msg-bubble">
+         <div class="wa-msg-label">📝 Message Preview (Aap chahein toh edit kar sakte hain):</div>
+         <textarea class="wa-msg-edit" rows="2" placeholder="Message text...">${initialMsg}</textarea>
+       </div>
+     </div>
+     <div class="wa-card-actions">
+       <a href="${initialWaMe}" target="_blank" rel="noopener noreferrer" class="wa-send-btn primary-wa-btn">
+         <span>🚀 Send on WhatsApp</span>
+       </a>
+       <a href="${initialWebUrl}" target="_blank" rel="noopener noreferrer" class="wa-send-btn secondary-wa-btn">
+         <span>💻 WhatsApp Web</span>
+       </a>
+     </div>
+   `;
+   const editArea = waCard.querySelector(".wa-msg-edit");
+   const sendBtn = waCard.querySelector(".primary-wa-btn");
+   const webBtn = waCard.querySelector(".secondary-wa-btn");
+   editArea.addEventListener("input", () => {
+     const newText = encodeURIComponent(editArea.value.trim());
+     if(cleanNum){
+       sendBtn.href = `https://wa.me/${cleanNum}?text=${newText}`;
+       webBtn.href = `https://web.whatsapp.com/send?phone=${cleanNum}&text=${newText}`;
+     } else {
+       sendBtn.href = `https://api.whatsapp.com/send?text=${newText}`;
+       webBtn.href = `https://web.whatsapp.com/send?text=${newText}`;
+     }
+   });
+   bubble.append(waCard);
+ }
+
  // 🎵 Interactive Media / YouTube Player Card in Chat
  if(options.media_card || (options.client_action && options.client_action.type === "youtube")){
    const mc = options.media_card || options.client_action;
@@ -617,18 +668,38 @@ function addMessage(role,text,sources=[],options={}){
        <span class="media-card-badge">🎵</span>
        <div>
          <div class="media-card-title">${mc.title || "YouTube Music"}</div>
-         <div class="media-card-sub">YouTube Background Media & App Play</div>
+         <div class="media-card-sub">YouTube Background Media, Inline & App Play</div>
        </div>
      </div>
      <div class="media-card-btn-group">
+       <button type="button" class="media-inline-play-btn">
+         <span>📺 Yahan Play Karein</span>
+       </button>
        <a href="${mc.web_url}" target="_blank" rel="noopener noreferrer" class="media-action-link-btn" title="YouTube App ya Browser me kholein">
-         <span>▶️ YouTube Par Kholo</span>
+         <span>▶️ YouTube Open</span>
        </a>
        <button type="button" class="media-bg-toggle-btn">
          <span>🔊 Background Player</span>
        </button>
      </div>
+     <div class="media-inline-player-box" style="display:none; margin-top:10px; border-radius:12px; overflow:hidden; aspect-ratio:16/9; box-shadow:0 4px 18px rgba(0,0,0,0.5);">
+       <iframe width="100%" height="100%" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+     </div>
    `;
+   const inlineBtn = mediaCard.querySelector(".media-inline-play-btn");
+   const playerBox = mediaCard.querySelector(".media-inline-player-box");
+   const iframe = playerBox.querySelector("iframe");
+   inlineBtn.addEventListener("click", () => {
+     if(playerBox.style.display === "none"){
+       iframe.src = mc.embed_url;
+       playerBox.style.display = "block";
+       inlineBtn.innerHTML = "<span>⏸️ Player Chhupayein</span>";
+     } else {
+       iframe.src = "";
+       playerBox.style.display = "none";
+       inlineBtn.innerHTML = "<span>📺 Yahan Play Karein</span>";
+     }
+   });
    const bgBtn = mediaCard.querySelector(".media-bg-toggle-btn");
    bgBtn.addEventListener("click", () => {
      playBackgroundMedia(mc.query || mc.title, mc.embed_url, mc.web_url);
@@ -761,6 +832,20 @@ function handleClientAction(actionData) {
         window.location.href = url;
       }
     }
+  } else if (actionData.type === "whatsapp_send") {
+    const target = (isMobile && actionData.mobile_url) ? actionData.mobile_url : (actionData.wa_me_url || actionData.web_url);
+    if (target) {
+      try {
+        const win = window.open(target, "_blank");
+        if (!win && isMobile) {
+          window.location.href = target;
+        }
+      } catch (e) {
+        window.location.href = target;
+      }
+    }
+  } else if (actionData.type === "sms_send") {
+    window.location.href = actionData.sms_url || "sms:";
   } else if (actionData.type === "phone_call") {
     window.location.href = actionData.tel_url || "tel:";
   } else if (actionData.type === "open_camera") {
@@ -815,7 +900,8 @@ async function sendMessage(raw){
     collaborating_agent: data.collaborating_agent,
     next_step: data.next_step,
     client_action: data.client_action,
-    media_card: data.media_card
+    media_card: data.media_card,
+    whatsapp_card: data.whatsapp_card
   });
   speak(data.reply);
 
@@ -1641,7 +1727,8 @@ async function sendVoiceMessage(message) {
       collaborating_agent: data.collaborating_agent,
       next_step: data.next_step,
       client_action: data.client_action,
-      media_card: data.media_card
+      media_card: data.media_card,
+      whatsapp_card: data.whatsapp_card
     });
 
     if (data.client_action) {

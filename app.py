@@ -31,6 +31,7 @@ UPLOADS_DIR = ROOT / "uploads"
 UPLOADS_DIR.mkdir(parents=True, exist_ok=True)
 ENV_FILE = ROOT / ".env"
 PERMISSIONS_FILE = ROOT / "permissions.json"
+CONTACTS_FILE = ROOT / "contacts.json"
 LEGACY_KEY = Path.home() / ".codex" / "google_key.txt"
 CODEX_AUTH_FILE = Path.home() / ".codex" / "auth.json"
 CODEX_CONFIG_FILE = Path.home() / ".codex" / "config.toml"
@@ -747,6 +748,149 @@ def save_permissions(updates: dict | None = None, allow_all: bool | None = None)
     PERMISSIONS_FILE.write_text(json.dumps(save_data, indent=2, ensure_ascii=False), encoding="utf-8")
     return get_permissions()
 
+def get_contacts() -> dict:
+    if CONTACTS_FILE.exists():
+        try:
+            data = json.loads(CONTACTS_FILE.read_text(encoding="utf-8"))
+            if isinstance(data, dict):
+                return data
+        except Exception:
+            pass
+    default = {
+        "self": "+917011500000",
+        "developer": "+917011500000"
+    }
+    try:
+        CONTACTS_FILE.write_text(json.dumps(default, indent=2, ensure_ascii=False), encoding="utf-8")
+    except OSError:
+        pass
+    return default
+
+def save_contact(name: str, phone: str) -> dict:
+    contacts = get_contacts()
+    clean_name = name.strip().lower()
+    clean_phone = re.sub(r"[^0-9\+]", "", phone.strip())
+    if not clean_phone.startswith("+"):
+        if len(clean_phone) == 10:
+            clean_phone = "+91" + clean_phone
+        elif clean_phone.startswith("91") and len(clean_phone) == 12:
+            clean_phone = "+" + clean_phone
+    contacts[clean_name] = clean_phone
+    try:
+        CONTACTS_FILE.write_text(json.dumps(contacts, indent=2, ensure_ascii=False), encoding="utf-8")
+    except OSError:
+        pass
+    return contacts
+
+def delete_contact(name: str) -> dict:
+    contacts = get_contacts()
+    clean_name = name.strip().lower()
+    if clean_name in contacts:
+        del contacts[clean_name]
+        try:
+            CONTACTS_FILE.write_text(json.dumps(contacts, indent=2, ensure_ascii=False), encoding="utf-8")
+        except OSError:
+            pass
+    return contacts
+
+def find_contact(query: str) -> tuple[str | None, str | None]:
+    if not query:
+        return None, None
+    contacts = get_contacts()
+    q = query.strip().lower()
+    if q in contacts:
+        return q.title(), contacts[q]
+    for k, v in contacts.items():
+        if q in k or k in q:
+            return k.title(), v
+    return None, None
+
+def parse_whatsapp_intent(msg: str) -> dict:
+    txt = (msg or "").strip()
+    
+    # 1. Contact save intent
+    save_m = re.search(r"([a-zA-Z0-9_\u0900-\u097F]{2,30})\s+ka\s+(?:phone|mobile|whatsapp)?\s*number\s+save\s+karo\s+([0-9\+\s\-]{10,15})", txt, re.I)
+    if not save_m:
+        save_m = re.search(r"save\s+karo\s+([a-zA-Z0-9_\u0900-\u097F]{2,30})\s+ka\s+(?:phone|mobile|whatsapp)?\s*number\s+([0-9\+\s\-]{10,15})", txt, re.I)
+    if not save_m:
+        save_m = re.search(r"([a-zA-Z0-9_\u0900-\u097F]{2,30})\s+(?:ka\s+)?number\s+([0-9\+\s\-]{10,15})\s+save\s+karo", txt, re.I)
+    if save_m:
+        c_name = save_m.group(1).strip()
+        c_num = re.sub(r"[^0-9\+]", "", save_m.group(2).strip())
+        return {"intent": "save_contact", "name": c_name, "phone": c_num}
+
+    # 2. Extract explicit phone number
+    phone_m = re.search(r"(\+?91[\s\-]?)?([6-9]\d{9})\b", txt)
+    phone = None
+    if phone_m:
+        raw_p = phone_m.group(0).replace(" ", "").replace("-", "")
+        if not raw_p.startswith("+"):
+            if len(raw_p) == 10:
+                raw_p = "+91" + raw_p
+            elif raw_p.startswith("91") and len(raw_p) == 12:
+                raw_p = "+" + raw_p
+        phone = raw_p
+
+    # 3. Extract contact name
+    contact_name = None
+    name_m = re.search(r"\b([a-zA-Z\u0900-\u097F]{2,20})\s+ko\b", txt, re.I)
+    if name_m:
+        cand = name_m.group(1).strip()
+        if cand.lower() not in ["kisi", "sab", "mujhe", "humko", "whatsapp", "phone", "message", "video", "audio", "song", "photo"]:
+            contact_name = cand
+
+    if contact_name and not phone:
+        matched_name, found_phone = find_contact(contact_name)
+        if found_phone:
+            phone = found_phone
+            contact_name = matched_name
+
+    # 4. Extract message text
+    msg_text = None
+    quote_m = re.search(r"""['"‘“]([^'"’”]+)['"’”]""", txt)
+    if quote_m:
+        msg_text = quote_m.group(1).strip()
+    else:
+        if ":" in txt:
+            parts = txt.split(":", 1)
+            msg_text = parts[1].strip()
+        else:
+            m_match = re.search(r"\b(?:message|msg|likho|likh\s*ke|bhejo|likhna|kahna|kaho)\s+(?:ki\s+|ye\s+|yeh\s+)?(.+)$", txt, re.I)
+            if m_match:
+                cand = m_match.group(1).strip()
+                cand = re.sub(r"\s*\b(bhejo|send\s*karo|kro|kar\s*do|karo)\s*$", "", cand, flags=re.I).strip()
+                if cand:
+                    msg_text = cand
+
+    intent = "send_message" if (msg_text or phone or contact_name) else "open_whatsapp"
+    return {
+        "intent": intent,
+        "phone": phone,
+        "contact_name": contact_name,
+        "message_text": msg_text
+    }
+
+def get_system_hardware_info() -> dict:
+    info = {"platform": sys.platform, "python": sys.version.split()[0]}
+    try:
+        disk = shutil.disk_usage(os.path.expanduser("~"))
+        info["disk_total_gb"] = round(disk.total / (1024**3), 1)
+        info["disk_free_gb"] = round(disk.free / (1024**3), 1)
+    except Exception:
+        pass
+    if sys.platform == "win32":
+        try:
+            res = subprocess.run(
+                ["powershell", "-Command", "Get-CimInstance -ClassName Win32_Battery | Select-Object -ExpandProperty EstimatedChargeRemaining"],
+                capture_output=True, text=True, timeout=3
+            )
+            pct = res.stdout.strip()
+            if pct and pct.isdigit():
+                info["battery_percent"] = int(pct)
+        except Exception:
+            pass
+    return info
+
 def _open_target(target: str, fallback_url: str | None = None) -> bool:
     try:
         if hasattr(os, "startfile"):
@@ -861,6 +1005,45 @@ ACTION_RULES = {
         "required": ["phone", "call_logs"],
         "required_names": ["Phone & Calls", "Call Logs"],
         "hindi_action": "Phone call lagane ya call history dekhne"
+    },
+    "sms": {
+        "name": "SMS Messaging",
+        "required": ["phone"],
+        "required_names": ["Phone & Calls"],
+        "hindi_action": "SMS compose karne"
+    },
+    "vscode": {
+        "name": "VS Code Editor",
+        "required": ["system_apps"],
+        "required_names": ["Apps, Files & Games"],
+        "hindi_action": "VS Code open karne",
+        "run": lambda: _open_target("code")
+    },
+    "terminal": {
+        "name": "Command Prompt / Terminal",
+        "required": ["system_apps"],
+        "required_names": ["Apps, Files & Games"],
+        "hindi_action": "Terminal launch karne",
+        "run": lambda: _open_target("cmd.exe")
+    },
+    "taskmgr": {
+        "name": "Task Manager",
+        "required": ["system_apps"],
+        "required_names": ["Apps, Files & Games"],
+        "hindi_action": "Task Manager open karne",
+        "run": lambda: _open_target("taskmgr.exe")
+    },
+    "lockscreen": {
+        "name": "Lock Screen",
+        "required": ["system_apps"],
+        "required_names": ["Apps, Files & Games"],
+        "hindi_action": "Screen lock karne"
+    },
+    "system_info": {
+        "name": "System Info & Battery",
+        "required": ["system_apps"],
+        "required_names": ["Apps, Files & Games"],
+        "hindi_action": "System stats check karne"
     }
 }
 
@@ -966,8 +1149,94 @@ def execute_system_action(action_key: str, user_query: str = "") -> dict:
             }
         }
 
-    # 2. WHATSAPP
+    # 2. WHATSAPP AUTOMATION (Direct Messaging, Contacts & Send Intents)
     if action_key == "whatsapp":
+        wa_intent = parse_whatsapp_intent(user_query)
+
+        # A. Save Contact Intent
+        if wa_intent["intent"] == "save_contact":
+            c_name = wa_intent["name"]
+            c_phone = wa_intent["phone"]
+            save_contact(c_name, c_phone)
+            reply = (
+                f"✅ **Contact Saved:** '{c_name.title()}' ka WhatsApp number `{c_phone}` Smart AI contacts me save kar liya gaya hai!\n\n"
+                f"Ab aap bol sakte hain: *'{c_name.title()} ko WhatsApp par message bhejo: Kal milte hain'*."
+            )
+            spoken = f"Theek hai! Maine {c_name} ka WhatsApp number contacts me save kar liya hai."
+            return {
+                "status": "success",
+                "action": "whatsapp",
+                "action_name": "WhatsApp",
+                "reply": reply,
+                "spoken": spoken
+            }
+
+        # B. Send Message Intent (Direct Click-to-Chat & Composer)
+        if wa_intent["intent"] == "send_message":
+            phone = wa_intent.get("phone")
+            c_name = wa_intent.get("contact_name")
+            text = wa_intent.get("message_text") or "Hello"
+            encoded_text = urllib.parse.quote(text)
+            clean_digits = re.sub(r"[^0-9]", "", phone) if phone else ""
+
+            if clean_digits:
+                web_url = f"https://web.whatsapp.com/send?phone={clean_digits}&text={encoded_text}"
+                mobile_url = f"whatsapp://send?phone={clean_digits}&text={encoded_text}"
+                wa_me_url = f"https://wa.me/{clean_digits}?text={encoded_text}"
+                display_target = f"{c_name} ({phone})" if c_name else phone
+            else:
+                web_url = f"https://web.whatsapp.com/send?text={encoded_text}"
+                mobile_url = f"whatsapp://send?text={encoded_text}"
+                wa_me_url = f"https://api.whatsapp.com/send?text={encoded_text}"
+                display_target = c_name if c_name else "WhatsApp Contacts"
+
+            try:
+                if hasattr(os, "startfile"):
+                    os.startfile(mobile_url)
+            except Exception:
+                try:
+                    import webbrowser
+                    webbrowser.open(wa_me_url)
+                except Exception:
+                    pass
+
+            reply = (
+                f"💬 **WhatsApp Message Ready:**\n\n"
+                f"👤 **To:** {display_target}\n"
+                f"📝 **Message:** *\"{text}\"*\n\n"
+                f"WhatsApp ko direct message ke saath launch kar diya gaya hai. Niche diye gaye card se aap turant **Send** kar sakte hain!"
+            )
+            spoken = f"Maine {display_target} ke liye WhatsApp message taiyar kar diya hai. Dekhiye screen par WhatsApp open ho raha hai!"
+
+            return {
+                "status": "success",
+                "action": "whatsapp",
+                "action_name": "WhatsApp",
+                "reply": reply,
+                "spoken": spoken,
+                "client_action": {
+                    "type": "whatsapp_send",
+                    "app": "whatsapp",
+                    "name": "WhatsApp",
+                    "phone": phone,
+                    "contact_name": c_name,
+                    "message_text": text,
+                    "web_url": web_url,
+                    "mobile_url": mobile_url,
+                    "wa_me_url": wa_me_url,
+                    "title": f"WhatsApp to {display_target}"
+                },
+                "whatsapp_card": {
+                    "phone": phone,
+                    "contact_name": c_name or display_target,
+                    "message_text": text,
+                    "web_url": web_url,
+                    "mobile_url": mobile_url,
+                    "wa_me_url": wa_me_url
+                }
+            }
+
+        # C. Default Open WhatsApp App
         try:
             _open_target("whatsapp://", fallback_url="https://web.whatsapp.com")
         except Exception:
@@ -1098,19 +1367,116 @@ def execute_system_action(action_key: str, user_query: str = "") -> dict:
 
     # 8. PHONE CALLS & DIALER
     if action_key == "phone":
+        phone_m = re.search(r"(\+?91[\s\-]?)?([6-9]\d{9})\b", user_query)
+        target_phone = ""
+        c_name = ""
+        if phone_m:
+            target_phone = phone_m.group(0).replace(" ", "").replace("-", "")
+        else:
+            name_m = re.search(r"\b([a-zA-Z\u0900-\u097F]{2,20})\s+ko\b", user_query, re.I)
+            if name_m:
+                cand = name_m.group(1).strip()
+                if cand.lower() not in ["kisi", "sab", "mujhe", "humko", "phone", "call"]:
+                    matched_name, found_p = find_contact(cand)
+                    if found_p:
+                        target_phone = found_p
+                        c_name = matched_name
+
+        tel_url = f"tel:{target_phone}" if target_phone else "tel:"
+        display = f"{c_name} ({target_phone})" if (c_name and target_phone) else (target_phone or "Phone Dialer")
+
         return {
             "status": "client_action",
             "client_action": {
                 "type": "phone_call",
                 "app": "phone",
                 "name": "Phone Calls",
-                "tel_url": "tel:",
-                "title": "Phone Dialer"
+                "tel_url": tel_url,
+                "phone": target_phone,
+                "title": f"Call: {display}"
             },
             "action": "phone",
             "action_name": "Phone Calls",
-            "reply": "📞 **Phone Call:** Phone dialer ko open kar diya gaya hai.",
-            "spoken": "Phone dialer open kar diya gaya hai."
+            "reply": f"📞 **Phone Call:** {display} ke liye dialer launch kar diya gaya hai.",
+            "spoken": f"Main {display} ke liye dialer open kar raha hoon."
+        }
+
+    # 8b. SMS MESSAGING
+    if action_key == "sms":
+        phone_m = re.search(r"(\+?91[\s\-]?)?([6-9]\d{9})\b", user_query)
+        target_phone = ""
+        if phone_m:
+            target_phone = phone_m.group(0).replace(" ", "").replace("-", "")
+        else:
+            name_m = re.search(r"\b([a-zA-Z\u0900-\u097F]{2,20})\s+ko\b", user_query, re.I)
+            if name_m:
+                cand = name_m.group(1).strip()
+                if cand.lower() not in ["kisi", "sab", "mujhe", "humko", "sms", "message"]:
+                    matched_name, found_p = find_contact(cand)
+                    if found_p:
+                        target_phone = found_p
+
+        text = ""
+        quote_m = re.search(r"""['"‘“]([^'"’”]+)['"’”]""", user_query)
+        if quote_m:
+            text = quote_m.group(1).strip()
+        else:
+            m_match = re.search(r"\b(?:message|msg|likho|likh\s*ke|text)\s+(?:ki\s+|ye\s+|yeh\s+)?(.+)$", user_query, re.I)
+            if m_match:
+                text = re.sub(r"\s*\b(bhejo|send|karo|kro)\s*$", "", m_match.group(1).strip(), flags=re.I)
+
+        enc_body = urllib.parse.quote(text or "")
+        sms_url = f"sms:{target_phone}?body={enc_body}" if target_phone else f"sms:?body={enc_body}"
+
+        return {
+            "status": "client_action",
+            "client_action": {
+                "type": "sms_send",
+                "app": "sms",
+                "name": "SMS",
+                "sms_url": sms_url,
+                "phone": target_phone,
+                "body": text,
+                "title": f"SMS to {target_phone or 'Contact'}"
+            },
+            "action": "sms",
+            "action_name": "SMS",
+            "reply": f"📨 **SMS Composer:** '{text or '...'}' ke saath SMS taiyar kar diya gaya hai.",
+            "spoken": "SMS composer open ho gaya hai."
+        }
+
+    # 8c. LOCK SCREEN
+    if action_key == "lockscreen":
+        try:
+            if sys.platform == "win32":
+                subprocess.run("rundll32.exe user32.dll,LockWorkStation", shell=True)
+            elif sys.platform == "darwin":
+                subprocess.run("pmset displaysleepnow", shell=True)
+        except Exception:
+            pass
+        return {
+            "status": "success",
+            "action": "lockscreen",
+            "action_name": "Screen Lock",
+            "reply": "🔒 **Screen Locked:** Computer ki screen ko surakshit lock kar diya gaya hai.",
+            "spoken": "Screen lock kar di gayi hai."
+        }
+
+    # 8d. SYSTEM HARDWARE & BATTERY INFO
+    if action_key == "system_info":
+        info = get_system_hardware_info()
+        pct = info.get("battery_percent")
+        bat_str = f"🔋 Battery: **{pct}%**" if pct is not None else "🔋 Power: AC Power / Desktop"
+        disk_str = f"💾 Storage: **{info.get('disk_free_gb', '?')} GB Free** / {info.get('disk_total_gb', '?')} GB"
+        plat_str = f"💻 System: **{info.get('platform', 'OS').title()}** (Python {info.get('python', '3.12')})"
+        reply = f"⚡ **System Hardware & Health:**\n\n{bat_str}\n{disk_str}\n{plat_str}\n\nComputer aur Smart AI smooth chal rahe hain! 🚀"
+        spoken = f"Aapki battery {pct} percent hai aur system smooth chal raha hai." if pct else "Aapka system online aur smooth chal raha hai."
+        return {
+            "status": "success",
+            "action": "system_info",
+            "action_name": "System Info",
+            "reply": reply,
+            "spoken": spoken
         }
 
     # 9. CAMERA
@@ -1177,13 +1543,29 @@ def _detect_action(msg: str) -> str | None:
     if re.search(r"\b(gana|gaana|gaane|song|songs|music|sangeet|geet|video|bhajan)\b", txt) and re.search(r"\b(chalao|chlao|bajao|play|sunao|suno|kholo|lagao|start)\b", txt):
         return "youtube"
 
-    # 2. Communication & Messaging
-    if re.search(r"\b(whatsapp|whatsap|watsap)\b", txt):
+    # 2. WhatsApp & Contacts Automation
+    if re.search(r"\b(whatsapp|whatsap|watsap)\b", txt) or re.search(r"\b(number\s+save|save\s+.*number|contact\s+save)\b", txt):
         return "whatsapp"
-    if re.search(r"\b(call karo|phone lagao|call lagao|dial karo|call history|phone milao)\b", txt):
+
+    # 3. SMS & Phone Calling
+    if re.search(r"\b(sms|text message)\b", txt) and re.search(r"\b(bhejo|send|likho|compose)\b", txt):
+        return "sms"
+    if re.search(r"\b(call karo|phone lagao|call lagao|dial karo|call history|phone milao|phone call)\b", txt):
         return "phone"
 
-    # 3. Google Services & Navigation
+    # 4. System Apps & Hardware Controls
+    if re.search(r"\b(vs code|vscode|visual studio code|code editor)\b", txt):
+        return "vscode"
+    if re.search(r"\b(terminal|cmd|command prompt|powershell)\b", txt) and re.search(r"\b(kholo|open|chalao|launch|start)\b", txt):
+        return "terminal"
+    if re.search(r"\b(task manager|taskmanager)\b", txt):
+        return "taskmgr"
+    if re.search(r"\b(screen lock|pc lock|computer lock|system lock|lock screen)\b", txt):
+        return "lockscreen"
+    if re.search(r"\b(battery|battery kitni|charging|system info|system specs|ram kitni|free storage)\b", txt):
+        return "system_info"
+
+    # 5. Google Services & Navigation
     if re.search(r"\b(google maps|maps|naksha)\b", txt):
         return "maps"
     if re.search(r"\b(google photos|photos|gallary|gallery)\b", txt):
@@ -1195,7 +1577,7 @@ def _detect_action(msg: str) -> str | None:
     if re.search(r"\b(chrome|browser|google browser)\b", txt):
         return "chrome"
 
-    # 4. Utilities & Tools
+    # 6. Utilities & Tools
     if re.search(r"\b(calculator|calc|hisaab app)\b", txt):
         return "calculator"
     if re.search(r"\b(camera|webcam|photo khincho|selfie)\b", txt):
@@ -2332,6 +2714,7 @@ def ask_smart_ai(message: str, history=None, use_search: bool = True, engine: st
                 "action": detected_action,
                 "client_action": act_res.get("client_action"),
                 "media_card": act_res.get("media_card"),
+                "whatsapp_card": act_res.get("whatsapp_card"),
                 "sources": [],
                 "used_search": False,
                 "model": "system-manager",
@@ -2572,6 +2955,8 @@ class Handler(BaseHTTPRequestHandler):
             self._json(200, get_world_weather(city)); return
         if path == "/api/status":
             self._json(200, status()); return
+        if path == "/api/contacts":
+            self._json(200, {"contacts": get_contacts()}); return
         if path == "/api/auth/me":
             u = self._get_auth_user()
             self._json(200, {"logged_in": bool(u), "user": u}); return
@@ -2722,6 +3107,19 @@ class Handler(BaseHTTPRequestHandler):
                     raise ValueError("API key text hona chahiye.")
                 save_key(data["api_key"])
                 self._json(200,{"saved":True,"status":status()}); return
+            if route == "/api/contacts":
+                action = str(data.get("action") or "save").lower()
+                if action == "delete":
+                    name = str(data.get("name") or "").strip()
+                    self._json(200, {"success": True, "contacts": delete_contact(name)})
+                    return
+                name = str(data.get("name") or "").strip()
+                phone = str(data.get("phone") or "").strip()
+                if not name or not phone:
+                    self._json(400, {"error": "Name aur phone number zaroori hai."})
+                    return
+                self._json(200, {"success": True, "contacts": save_contact(name, phone)})
+                return
             if route == "/api/version/create":
                 new_ver = data.get("version") or data.get("new_version")
                 target = data.get("target") or data.get("target_dir")
