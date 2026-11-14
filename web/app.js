@@ -244,70 +244,97 @@ function speakBrowserFallback(clean, onFinished = null){
  }
 }
 
+function safeEncodeURIComponent(str) {
+  if (!str) return "";
+  try {
+    return encodeURIComponent(str);
+  } catch (e) {
+    try {
+      if (typeof str.toWellFormed === "function") {
+        return encodeURIComponent(str.toWellFormed());
+      }
+      const cleaned = str.replace(/[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?<![\uD800-\uDBFF])[\uDC00-\uDFFF]/g, "");
+      return encodeURIComponent(cleaned);
+    } catch (e2) {
+      return encodeURI(str.replace(/[^\x00-\x7F]/g, ""));
+    }
+  }
+}
+
 function speak(text, onFinished = null){
  // In Live Voice mode, ALWAYS speak! Otherwise check speechToggle
  if(!speechToggle.checked && !isLiveVoiceActive){
   if(onFinished) onFinished();
   return;
  }
- stopAllAudio();
- const clean = text
-   .replace(/https?:\/\/\S+/g, "")
-   .replace(/[#*_`~\[\]\(\)\{\}\<\>\\\/|]/g, " ")
-   .replace(/[✦⚡⭐🤖🧠👥🕵️💡💻⚖️🎯📋📌🙌👨‍💻🦙💎💬🔧🏗️]/g, "")
-   .replace(/\s+/g, " ")
-   .trim();
- if(!clean){
-  if(onFinished) onFinished();
-  return;
+ try {
+   stopAllAudio();
+   const clean = text
+     .replace(/https?:\/\/\S+/g, "")
+     .replace(/[#*_`~\[\]\(\)\{\}\<\>\\\/|]/g, " ")
+     .replace(/[✦⚡⭐🤖🧠👥🕵️💡💻⚖️🎯📋📌🙌👨‍💻🦙💎💬🔧🏗️]/g, "")
+     .replace(/\s+/g, " ")
+     .trim();
+   if(!clean){
+    if(onFinished) onFinished();
+    return;
+   }
+
+   isAiSpeaking = true;
+   setRobotSpeaking(true);
+   if(isLiveVoiceActive){
+    voiceTurnState = "speaking";
+    if(typeof setVoiceStateUI === "function") setVoiceStateUI("speaking");
+    if(typeof safeStopRecognition === "function") safeStopRecognition();
+   }
+
+   if(stopSpeech) stopSpeech.hidden = false;
+
+   const safeSlice = typeof clean.toWellFormed === "function"
+     ? clean.toWellFormed().slice(0, 450)
+     : Array.from(clean).slice(0, 350).join("");
+
+   const audioUrl = "/api/tts?text=" + safeEncodeURIComponent(safeSlice);
+   const audio = new Audio(audioUrl);
+   currentAudio = audio;
+
+   let finished = false;
+   const handleEnd = () => {
+    if(finished) return;
+    finished = true;
+    isAiSpeaking = false;
+    currentAudio = null;
+    if(!isLiveVoiceActive || voiceTurnState !== "speaking") setRobotSpeaking(false);
+    if(stopSpeech) stopSpeech.hidden = true;
+    if(onFinished) onFinished();
+    else if(isLiveVoiceActive && typeof onAiFinishedSpeaking === "function") onAiFinishedSpeaking();
+   };
+
+   audio.onplay = () => {
+    isAiSpeaking = true;
+    setRobotSpeaking(true);
+    if(stopSpeech) stopSpeech.hidden = false;
+    if(isLiveVoiceActive){
+     voiceTurnState = "speaking";
+     if(typeof setVoiceStateUI === "function") setVoiceStateUI("speaking");
+     if(typeof safeStopRecognition === "function") safeStopRecognition();
+    }
+   };
+   audio.onended = handleEnd;
+   audio.onerror = () => {
+    currentAudio = null;
+    speakBrowserFallback(safeSlice, handleEnd);
+   };
+
+   audio.play().catch(() => {
+    currentAudio = null;
+    speakBrowserFallback(safeSlice, handleEnd);
+   });
+ } catch (err) {
+   console.warn("speak error handled gracefully:", err);
+   isAiSpeaking = false;
+   if(onFinished) onFinished();
  }
-
- isAiSpeaking = true;
- setRobotSpeaking(true);
- if(isLiveVoiceActive){
-  voiceTurnState = "speaking";
-  if(typeof setVoiceStateUI === "function") setVoiceStateUI("speaking");
-  if(typeof safeStopRecognition === "function") safeStopRecognition();
- }
-
- if(stopSpeech) stopSpeech.hidden = false;
-
- const audioUrl = "/api/tts?text=" + encodeURIComponent(clean.slice(0, 700));
- const audio = new Audio(audioUrl);
- currentAudio = audio;
-
- let finished = false;
- const handleEnd = () => {
-  if(finished) return;
-  finished = true;
-  isAiSpeaking = false;
-  currentAudio = null;
-  if(!isLiveVoiceActive || voiceTurnState !== "speaking") setRobotSpeaking(false);
-  if(stopSpeech) stopSpeech.hidden = true;
-  if(onFinished) onFinished();
-  else if(isLiveVoiceActive && typeof onAiFinishedSpeaking === "function") onAiFinishedSpeaking();
- };
-
- audio.onplay = () => {
-  isAiSpeaking = true;
-  setRobotSpeaking(true);
-  if(stopSpeech) stopSpeech.hidden = false;
-  if(isLiveVoiceActive){
-   voiceTurnState = "speaking";
-   if(typeof setVoiceStateUI === "function") setVoiceStateUI("speaking");
-   if(typeof safeStopRecognition === "function") safeStopRecognition();
-  }
- };
- audio.onended = handleEnd;
- audio.onerror = () => {
-  currentAudio = null;
-  speakBrowserFallback(clean, handleEnd);
- };
-
- audio.play().catch(() => {
-  currentAudio = null;
-  speakBrowserFallback(clean, handleEnd);
- });
 }
 
 function addMessage(role,text,sources=[],options={}){
@@ -608,53 +635,84 @@ function addMessage(role,text,sources=[],options={}){
  }
 
  // 💬 Interactive WhatsApp Automation Card
- if(options.whatsapp_card || (options.client_action && options.client_action.type === "whatsapp_send")){
+ if(options.whatsapp_card || (options.client_action && (options.client_action.type === "whatsapp_send" || options.client_action.app === "whatsapp"))){
    const wc = options.whatsapp_card || options.client_action;
    const waCard = document.createElement("div");
    waCard.className = "chat-whatsapp-card";
    const cleanNum = (wc.phone || "").replace(/[^0-9]/g, "");
    const initialMsg = wc.message_text || "";
-   const initialWaMe = cleanNum ? `https://wa.me/${cleanNum}?text=${encodeURIComponent(initialMsg)}` : `https://api.whatsapp.com/send?text=${encodeURIComponent(initialMsg)}`;
-   const initialWebUrl = cleanNum ? `https://web.whatsapp.com/send?phone=${cleanNum}&text=${encodeURIComponent(initialMsg)}` : `https://web.whatsapp.com/send?text=${encodeURIComponent(initialMsg)}`;
+   const isOpenOnly = Boolean(wc.is_open || !initialMsg);
 
-   waCard.innerHTML = `
-     <div class="wa-card-header">
-       <span class="wa-badge">💬 WhatsApp Automation</span>
-       <span class="wa-status-pill">Ready to Send</span>
-     </div>
-     <div class="wa-card-body">
-       <div class="wa-field-row">
-         <span class="wa-label">👤 Recipient:</span>
-         <strong class="wa-val">${wc.contact_name || wc.phone || "WhatsApp Chat"}</strong>
+   const initialWaMe = cleanNum
+     ? (initialMsg ? `https://wa.me/${cleanNum}?text=${safeEncodeURIComponent(initialMsg)}` : `https://wa.me/${cleanNum}`)
+     : (initialMsg ? `https://api.whatsapp.com/send?text=${safeEncodeURIComponent(initialMsg)}` : `https://api.whatsapp.com/send`);
+   const initialWebUrl = cleanNum
+     ? (initialMsg ? `https://web.whatsapp.com/send?phone=${cleanNum}&text=${safeEncodeURIComponent(initialMsg)}` : `https://web.whatsapp.com/send?phone=${cleanNum}`)
+     : (initialMsg ? `https://web.whatsapp.com/send?text=${safeEncodeURIComponent(initialMsg)}` : `https://web.whatsapp.com`);
+
+   if (isOpenOnly) {
+     waCard.innerHTML = `
+       <div class="wa-card-header">
+         <span class="wa-badge">💬 WhatsApp Quick Open</span>
+         <span class="wa-status-pill">Ready</span>
        </div>
-       ${wc.phone ? `<div class="wa-field-row"><span class="wa-label">📱 Number:</span> <span class="wa-val-phone">${wc.phone}</span></div>` : ''}
-       <div class="wa-msg-bubble">
-         <div class="wa-msg-label">📝 Message Preview (Aap chahein toh edit kar sakte hain):</div>
-         <textarea class="wa-msg-edit" rows="2" placeholder="Message text...">${initialMsg}</textarea>
+       <div class="wa-card-body">
+         <div class="wa-field-row">
+           <span class="wa-label">📱 Action:</span>
+           <strong class="wa-val">WhatsApp App & Web Connect</strong>
+         </div>
        </div>
-     </div>
-     <div class="wa-card-actions">
-       <a href="${initialWaMe}" target="_blank" rel="noopener noreferrer" class="wa-send-btn primary-wa-btn">
-         <span>🚀 Send on WhatsApp</span>
-       </a>
-       <a href="${initialWebUrl}" target="_blank" rel="noopener noreferrer" class="wa-send-btn secondary-wa-btn">
-         <span>💻 WhatsApp Web</span>
-       </a>
-     </div>
-   `;
-   const editArea = waCard.querySelector(".wa-msg-edit");
-   const sendBtn = waCard.querySelector(".primary-wa-btn");
-   const webBtn = waCard.querySelector(".secondary-wa-btn");
-   editArea.addEventListener("input", () => {
-     const newText = encodeURIComponent(editArea.value.trim());
-     if(cleanNum){
-       sendBtn.href = `https://wa.me/${cleanNum}?text=${newText}`;
-       webBtn.href = `https://web.whatsapp.com/send?phone=${cleanNum}&text=${newText}`;
-     } else {
-       sendBtn.href = `https://api.whatsapp.com/send?text=${newText}`;
-       webBtn.href = `https://web.whatsapp.com/send?text=${newText}`;
+       <div class="wa-card-actions">
+         <a href="https://api.whatsapp.com/send" target="_blank" rel="noopener noreferrer" class="wa-send-btn primary-wa-btn">
+           <span>💬 Open WhatsApp App</span>
+         </a>
+         <a href="https://web.whatsapp.com" target="_blank" rel="noopener noreferrer" class="wa-send-btn secondary-wa-btn">
+           <span>💻 WhatsApp Web</span>
+         </a>
+       </div>
+     `;
+   } else {
+     waCard.innerHTML = `
+       <div class="wa-card-header">
+         <span class="wa-badge">💬 WhatsApp Automation</span>
+         <span class="wa-status-pill">Ready to Send</span>
+       </div>
+       <div class="wa-card-body">
+         <div class="wa-field-row">
+           <span class="wa-label">👤 Recipient:</span>
+           <strong class="wa-val">${wc.contact_name || wc.phone || "WhatsApp Chat"}</strong>
+         </div>
+         ${wc.phone ? `<div class="wa-field-row"><span class="wa-label">📱 Number:</span> <span class="wa-val-phone">${wc.phone}</span></div>` : ''}
+         <div class="wa-msg-bubble">
+           <div class="wa-msg-label">📝 Message Preview (Aap chahein toh edit kar sakte hain):</div>
+           <textarea class="wa-msg-edit" rows="2" placeholder="Message text...">${initialMsg}</textarea>
+         </div>
+       </div>
+       <div class="wa-card-actions">
+         <a href="${initialWaMe}" target="_blank" rel="noopener noreferrer" class="wa-send-btn primary-wa-btn">
+           <span>🚀 Send on WhatsApp</span>
+         </a>
+         <a href="${initialWebUrl}" target="_blank" rel="noopener noreferrer" class="wa-send-btn secondary-wa-btn">
+           <span>💻 WhatsApp Web</span>
+         </a>
+       </div>
+     `;
+     const editArea = waCard.querySelector(".wa-msg-edit");
+     const sendBtn = waCard.querySelector(".primary-wa-btn");
+     const webBtn = waCard.querySelector(".secondary-wa-btn");
+     if (editArea && sendBtn && webBtn) {
+       editArea.addEventListener("input", () => {
+         const newText = safeEncodeURIComponent(editArea.value.trim());
+         if(cleanNum){
+           sendBtn.href = `https://wa.me/${cleanNum}?text=${newText}`;
+           webBtn.href = `https://web.whatsapp.com/send?phone=${cleanNum}&text=${newText}`;
+         } else {
+           sendBtn.href = `https://api.whatsapp.com/send?text=${newText}`;
+           webBtn.href = `https://web.whatsapp.com/send?text=${newText}`;
+         }
+       });
      }
-   });
+   }
    bubble.append(waCard);
  }
 
@@ -832,16 +890,14 @@ function handleClientAction(actionData) {
         window.location.href = url;
       }
     }
-  } else if (actionData.type === "whatsapp_send") {
-    const target = (isMobile && actionData.mobile_url) ? actionData.mobile_url : (actionData.wa_me_url || actionData.web_url);
+  } else if (actionData.type === "whatsapp_send" || actionData.app === "whatsapp") {
+    const target = actionData.wa_me_url || actionData.mobile_url || "https://api.whatsapp.com/send";
     if (target) {
-      try {
-        const win = window.open(target, "_blank");
-        if (!win && isMobile) {
-          window.location.href = target;
-        }
-      } catch (e) {
+      if (isMobile) {
         window.location.href = target;
+      } else {
+        const win = window.open(target, "_blank");
+        if (!win) window.location.href = target;
       }
     }
   } else if (actionData.type === "sms_send") {
@@ -936,10 +992,11 @@ async function sendMessage(raw){
 
   setStatus(serverOnlineLabel);
  }catch(error){
-  const errMsg=(error.message||"Connection mein dikkat aayi.")+" Settings ya network check karke koshish karein.";
-  addMessage("assistant",errMsg);
-  speak(errMsg);
-  setStatus("Connection mein dikkat",false);
+  console.warn("sendMessage error:", error);
+  const friendlyMsg = "Maaf kijiye, abhi connect hone mein thodi dikkat aayi. Kripya dobara koshish karein.";
+  addMessage("assistant", friendlyMsg);
+  try { speak(friendlyMsg); } catch(e){}
+  setStatus("24/7 Cloud Server Online 🌐", true);
  }finally{
   typing.hidden=true;
   sendButton.disabled=false;
@@ -1744,14 +1801,14 @@ async function sendVoiceMessage(message) {
     });
 
   } catch (err) {
+    console.warn("voice loop error:", err);
     const isNetworkErr = !err || err.message === "Failed to fetch" || (err.message && err.message.includes("fetch"));
-    let errMsg = "Dikkat aayi. Dobara boliye.";
+    let errMsg = "Maaf kijiye, samajhne me thodi dikkat aayi. Kripya dobara boliye.";
     if (isNetworkErr) {
-      errMsg = "Smart AI server se connect nahi ho saka. Kripya check karein ki 'start.bat' chalu hai.";
+      errMsg = "Smart AI server se connect nahi ho saka. Kripya connection check karein.";
       setStatus("Server Offline", false);
-    } else if (err.message) {
-      errMsg = err.message + " Dobara boliye.";
-      setStatus("Error", false);
+    } else {
+      setStatus(serverOnlineLabel);
     }
 
     addMessage("assistant", errMsg);

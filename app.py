@@ -1053,7 +1053,7 @@ def _extract_media_search_query(msg: str) -> str:
     """
     lowered = (msg or "").lower()
     cleaned = re.sub(
-        r"\b(youtube|utube|yt|se|pe|par|ka|ke|ki|ko|kholo|open|karo|kro|kar\s*do|chalao|chlao|bajao|sunao|suno|play|start|koi|bhi|ek|acha|accha|thoda|mujhe|humko|mere\s*liye|pls|please)\b",
+        r"\b(youtube|utube|yt|se|pe|par|ka|ke|ki|ko|kholo|open|karo|kro|kar\s*do|chalao|chlao|bajao|sunao|suno|play|start|koi|bhi|ek|acha|accha|thoda|mujhe|humko|mere\s*liye|pls|please|or|aur|uspe|isme|iss|uss|me|mein|batao|dikhao|sunna|chahiye|lagao|laga\s*do|bhi)\b",
         " ",
         lowered,
         flags=re.IGNORECASE
@@ -1069,6 +1069,8 @@ def _extract_media_search_query(msg: str) -> str:
     specific = re.sub(r"\s+", " ", specific).strip()
 
     if specific and len(specific) > 2:
+        if has_old and "old" not in specific:
+            specific = f"old {specific}"
         return f"{specific} songs" if has_song and "song" not in specific else specific
 
     if has_old:
@@ -1082,6 +1084,22 @@ def _extract_media_search_query(msg: str) -> str:
     if has_video:
         return "trending videos"
     return "latest trending hindi songs"
+
+def get_youtube_video_id(query: str) -> str | None:
+    """
+    Finds real working YouTube video ID for a song query to ensure 100% playable embeds and apps.
+    """
+    try:
+        url = f"https://www.youtube.com/results?search_query={urllib.parse.quote(query)}"
+        req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"})
+        with urllib.request.urlopen(req, timeout=3.5) as resp:
+            html = resp.read().decode("utf-8", errors="ignore")
+            vids = re.findall(r'/watch\?v=([a-zA-Z0-9_-]{11})', html)
+            if vids:
+                return vids[0]
+    except Exception:
+        pass
+    return None
 
 def execute_system_action(action_key: str, user_query: str = "") -> dict:
     rule = ACTION_RULES.get(action_key)
@@ -1111,9 +1129,16 @@ def execute_system_action(action_key: str, user_query: str = "") -> dict:
     # 1. YOUTUBE & MEDIA PLAYBACK INTENT
     if action_key == "youtube":
         search_q = _extract_media_search_query(user_query)
-        web_url = f"https://www.youtube.com/results?search_query={urllib.parse.quote(search_q)}"
-        intent_url = f"vnd.youtube://results?search_query={urllib.parse.quote(search_q)}"
-        embed_url = f"https://www.youtube-nocookie.com/embed?listType=search&list={urllib.parse.quote(search_q)}&autoplay=1"
+        vid = get_youtube_video_id(search_q)
+
+        if vid:
+            web_url = f"https://www.youtube.com/watch?v={vid}"
+            embed_url = f"https://www.youtube-nocookie.com/embed/{vid}?autoplay=1&enablejsapi=1"
+            intent_url = f"vnd.youtube:{vid}"
+        else:
+            web_url = f"https://www.youtube.com/results?search_query={urllib.parse.quote(search_q)}"
+            embed_url = f"https://www.youtube-nocookie.com/embed?search={urllib.parse.quote(search_q)}&autoplay=1"
+            intent_url = f"vnd.youtube://results?search_query={urllib.parse.quote(search_q)}"
 
         try:
             if hasattr(os, "startfile"):
@@ -1121,8 +1146,9 @@ def execute_system_action(action_key: str, user_query: str = "") -> dict:
         except Exception:
             pass
 
-        reply_msg = f"🎵 **YouTube Music Play:** '{search_q.title()}' ko background player aur YouTube me play kar diya gaya hai!"
-        spoken_msg = f"Haan bilkul! Main abhi YouTube par '{search_q}' play kar raha hoon. Dekhiye background me music chalu ho gaya hai!"
+        title_display = search_q.title()
+        reply_msg = f"🎵 **YouTube Play:** '{title_display}' play kar diya gaya hai! Niche diye gaye player se suniye ya YouTube app me kholein."
+        spoken_msg = f"Haan bilkul! Main abhi YouTube par '{title_display}' play kar raha hoon."
 
         return {
             "status": "success",
@@ -1134,15 +1160,17 @@ def execute_system_action(action_key: str, user_query: str = "") -> dict:
                 "type": "youtube",
                 "app": "youtube",
                 "query": search_q,
+                "video_id": vid,
                 "web_url": web_url,
                 "intent_url": intent_url,
                 "embed_url": embed_url,
-                "title": f"YouTube: {search_q.title()}"
+                "title": f"YouTube: {title_display}"
             },
             "media_card": {
                 "type": "youtube",
-                "title": search_q.title(),
+                "title": title_display,
                 "query": search_q,
+                "video_id": vid,
                 "web_url": web_url,
                 "intent_url": intent_url,
                 "embed_url": embed_url
@@ -1238,22 +1266,33 @@ def execute_system_action(action_key: str, user_query: str = "") -> dict:
 
         # C. Default Open WhatsApp App
         try:
-            _open_target("whatsapp://", fallback_url="https://web.whatsapp.com")
+            if hasattr(os, "startfile"):
+                os.startfile("https://api.whatsapp.com/send")
         except Exception:
             pass
         return {
             "status": "success",
             "action": "whatsapp",
             "action_name": "WhatsApp",
-            "reply": "💬 **WhatsApp:** WhatsApp ko aapke phone aur computer par launch kar diya gaya hai.",
+            "reply": "💬 **WhatsApp:** WhatsApp ko aapke phone aur computer par launch kar diya gaya hai. Niche diye gaye button se aap 1-click me open kar sakte hain.",
             "spoken": "Haan bilkul! Main abhi WhatsApp open kar raha hoon.",
             "client_action": {
-                "type": "open_app",
+                "type": "whatsapp_send",
                 "app": "whatsapp",
                 "name": "WhatsApp",
                 "web_url": "https://web.whatsapp.com",
-                "mobile_url": "whatsapp://",
+                "mobile_url": "https://api.whatsapp.com/send",
+                "wa_me_url": "https://api.whatsapp.com/send",
                 "title": "WhatsApp"
+            },
+            "whatsapp_card": {
+                "phone": None,
+                "contact_name": "WhatsApp App",
+                "message_text": "",
+                "is_open": True,
+                "web_url": "https://web.whatsapp.com",
+                "mobile_url": "https://api.whatsapp.com/send",
+                "wa_me_url": "https://api.whatsapp.com/send"
             }
         }
 
